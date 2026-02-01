@@ -1,0 +1,47 @@
+[
+  {
+    "id": "song-1",
+    "title": "Spring-Like",
+    "artist": "Botanica",
+    "album": "Organic Audio Reconstruction",
+    "cover": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809845-62572e03/_____2026-01-29_214255.png",
+    "audio": "src/assets/audio/a_farewell_to_spring.mp3",
+    "duration": 180
+  },
+  {
+    "id": "song-2",
+    "title": "Organic Growth",
+    "artist": "Botanica",
+    "album": "Botanical Synthesis",
+    "cover": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809239-20c1f692/_____2026-01-29_213557.png",
+    "audio": "src/assets/audio/charm3.mp3",
+    "duration": 210
+  },
+  {
+    "id": "song-3",
+    "title": "Steel Rain",
+    "artist": "Botanica",
+    "album": "Industrial Echo",
+    "cover": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809584-8018261f/_____2026-01-29_214148.png",
+    "audio": "src/assets/audio/granular2.mp3",
+    "duration": 240
+  },
+  {
+    "id": "song-4",
+    "title": "Root System",
+    "artist": "Botanica",
+    "album": "Grounded",
+    "cover": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698810147-8f7bb194/_____2026-01-29_214427.png",
+    "audio": "src/assets/audio/JUNGLE.mp3",
+    "duration": 225
+  },
+  {
+    "id": "song-5",
+    "title": "Digital Bloom",
+    "artist": "Botanica",
+    "album": "Bloom",
+    "cover": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698810455-2e0698b4/_____2026-01-29_214626.png",
+    "audio": "src/assets/audio/monolith_botanica.mp3",
+    "duration": 195
+  }
+]

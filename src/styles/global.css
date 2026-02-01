@@ -1,0 +1,341 @@
+/* Global Styles */
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Space+Grotesk:wght@300;400;700&family=Azeret+Mono:wght@100;200;300;400&display=swap");
+
+:root {
+  --bg: #f8f8f8;
+  --text: #333333;
+  --accent: #00ff41;
+  --glitch-cyan: rgba(0, 242, 255, 0.8);
+  --glitch-magenta: rgba(255, 0, 193, 0.8);
+  --muted: #666666;
+}
+
+.dark {
+  --bg: #000000;
+  --text: #ffffff;
+  --muted: #666666;
+}
+
+body {
+  font-family: "Space Grotesk", sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.font-logo {
+  font-family: "Dancing Script", cursive;
+}
+
+.font-mono {
+  font-family: "Azeret Mono", monospace;
+}
+
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* 硬件加速基础类 */
+.animate-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text);
+  letter-spacing: 0.4em;
+  margin-right: -0.4em;
+  font-weight: 100;
+  z-index: 10;
+  transition: all 0.3s ease;
+  /* 添加硬件加速 */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* 小屏幕时强制文字描边为白色 */
+@media (max-width: 767px) {
+  .glitch-text {
+    -webkit-text-stroke: 1px white !important;
+  }
+
+  .glitch-text::before {
+    -webkit-text-stroke: 1px rgba(0, 255, 249, 0.8) !important;
+  }
+
+  .glitch-text::after {
+    -webkit-text-stroke: 1px rgba(255, 0, 193, 0.8) !important;
+  }
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.8;
+  /* 添加硬件加速 */
+  transform: translateZ(0);
+  will-change: transform, clip-path;
+}
+
+.glitch-text::before {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 255, 249, 0.8);
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+  transform: translate(-4px, 0);
+  mix-blend-mode: screen;
+}
+
+.glitch-text::after {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 0, 193, 0.8);
+  animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+  transform: translate(4px, 0);
+  mix-blend-mode: screen;
+}
+
+@keyframes glitch-anim-1 {
+  0% {
+    clip-path: inset(10% 0 80% 0);
+    transform: translate(-3px, 1px);
+  }
+  20% {
+    clip-path: inset(40% 0 40% 0);
+    transform: translate(1px, -1px);
+  }
+  40% {
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(-1px, 2px);
+  }
+  60% {
+    clip-path: inset(20% 0 70% 0);
+    transform: translate(2px, -1px);
+  }
+  80% {
+    clip-path: inset(80% 0 5% 0);
+    transform: translate(-2px, 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip-path: inset(70% 0 10% 0);
+    transform: translate(3px, -1px);
+  }
+  25% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-1px, 1px);
+  }
+  50% {
+    clip-path: inset(50% 0 30% 0);
+    transform: translate(1px, -2px);
+  }
+  75% {
+    clip-path: inset(10% 0 75% 0);
+    transform: translate(-2px, 1px);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes glitch-skew {
+  0% {
+    transform: skew(0deg);
+  }
+  10% {
+    transform: skew(0deg);
+  }
+  11% {
+    transform: skew(-0.5deg);
+  }
+  12% {
+    transform: skew(0deg);
+  }
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+.thin-line {
+  background-color: var(--text);
+  opacity: 0.2;
+}
+
+.dark .thin-line {
+  background-color: var(--text);
+  opacity: 0.15;
+}
+
+.noise-bg {
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.bar {
+  width: 2px;
+  background-color: var(--text);
+  animation: bounce 1s ease-in-out infinite;
+  /* 添加硬件加速 */
+  transform: translateZ(0);
+  will-change: height;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    height: 4px;
+  }
+  50% {
+    height: 12px;
+  }
+}
+
+.nav-overlay {
+  backdrop-filter: blur(20px);
+  transition: all 0.5s cubic-bezier(0.85, 0, 0.15, 1);
+  /* 添加硬件加速 */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.nav-link:hover {
+  color: var(--text);
+  padding-left: 1rem;
+}
+
+.water-reflection {
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 80%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 80%
+  );
+  /* 添加硬件加速 */
+  transform: translateZ(0);
+}
+
+.ripple-lines {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.ripple-line {
+  position: absolute;
+  width: 150%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.3),
+    transparent
+  );
+  animation: ripple-move 8s infinite linear;
+  opacity: 0.3;
+  /* 添加硬件加速 */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+.dark .ripple-line {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+}
+
+@keyframes ripple-move {
+  0% {
+    transform: translateX(-20%) translateY(0) scaleX(1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(20%) translateY(40px) scaleX(1.2);
+    opacity: 0;
+  }
+}
+
+/* Custom easing for smoother color transition */
+.transition-vivid {
+  transition: all 1200ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* 添加硬件加速 */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* SPA-like Transitions */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(main-content) {
+  animation: 0.3s ease-out both fade-out;
+  /* 添加硬件加速 */
+  transform: translateZ(0);
+  will-change: opacity;
+}
+
+::view-transition-new(main-content) {
+  animation: 0.4s ease-in 0.1s both fade-in;
+  /* 添加硬件加速 */
+  transform: translateZ(0);
+  will-change: opacity;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
