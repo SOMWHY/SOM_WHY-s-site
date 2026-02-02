@@ -15,7 +15,7 @@ const Works = memo(function Works() {
       try {
         console.log("Starting to fetch songs...")
         const response = await fetch(
-          "http://localhost:3000/artist/songs?id=35889036",
+          "http://localhost:3000/album?id=273210458",
           {
             mode: "cors",
             headers: {
@@ -30,7 +30,7 @@ const Works = memo(function Works() {
         const data = await response.json()
         console.log("Data received:", data)
         if (data.songs) {
-          setSongs(data.songs.slice(0, 6))
+          setSongs(data.songs)
         } else {
           console.error("No songs found in response")
         }
