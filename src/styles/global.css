@@ -8,12 +8,14 @@
   --glitch-cyan: rgba(0, 242, 255, 0.8);
   --glitch-magenta: rgba(255, 0, 193, 0.8);
   --muted: #666666;
+  --ring-border: rgb(82 82 91);
 }
 
 .dark {
   --bg: #000000;
   --text: #ffffff;
   --muted: #666666;
+  --ring-border: rgb(161 161 170);
 }
 
 body {

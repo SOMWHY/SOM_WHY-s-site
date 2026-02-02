@@ -9,7 +9,7 @@ const ImageCard = memo(function ImageCard({
   width,
   height,
   loading = "lazy",
-  fetchpriority = "low",
+  fetchPriority = "low",
 }) {
   // Determine aspect ratio class with priority: aspectRatio prop > calculated from width/height > default
   const aspectRatioClass = aspectRatio
@@ -42,7 +42,7 @@ const ImageCard = memo(function ImageCard({
         width={width}
         height={height}
         loading={loading}
-        fetchpriority={fetchpriority}
+        fetchPriority={fetchPriority}
         onLoad={() => setIsLoaded(true)}
         className={`w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 no-select group-hover:scale-105 group-hover:rotate-x-2 group-hover:rotate-y-2 ${isLoaded ? "opacity-60" : "opacity-0"}`}
       />

@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useRef } from "react"
-import { ImageCard } from "../components"
+import React, { memo, useState, useEffect, useRef } from "react"
+import { ArrowUpRight } from "lucide-react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -7,16 +7,52 @@ gsap.registerPlugin(ScrollTrigger)
 
 const Works = memo(function Works() {
   const containerRef = useRef(null)
+  const [songs, setSongs] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchSongs = async () => {
+      try {
+        console.log("Starting to fetch songs...")
+        const response = await fetch(
+          "http://localhost:3000/artist/songs?id=35889036",
+          {
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        )
+        console.log("Response received:", response)
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json()
+        console.log("Data received:", data)
+        if (data.songs) {
+          setSongs(data.songs.slice(0, 6))
+        } else {
+          console.error("No songs found in response")
+        }
+      } catch (error) {
+        console.error("Failed to fetch songs:", error)
+      } finally {
+        console.log("Fetch completed, setting loading to false")
+        setLoading(false)
+      }
+    }
+
+    fetchSongs()
+  }, [])
 
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
 
-    const items = container.querySelectorAll(".group")
+    const items = container.querySelectorAll(".link-card")
     if (!items.length) return
 
     gsap.utils.toArray(items).forEach((item, index) => {
-      // 确保元素初始状态是可见的
       gsap.set(item, { opacity: 1, y: 0 })
 
       gsap.from(item, {
@@ -32,10 +68,71 @@ const Works = memo(function Works() {
         ease: "power2.out",
       })
     })
-  }, [])
+  }, [songs])
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const linkCards = container.querySelectorAll(".link-card")
+    if (!linkCards.length) return
+
+    const timelines = new Map()
+    const eventHandlers = new Map()
+
+    linkCards.forEach((card) => {
+      const ring = card.querySelector(".ring-border")
+      if (!ring) return
+
+      const totalLength = ring.getTotalLength()
+
+      gsap.set(ring, {
+        strokeDasharray: totalLength,
+        strokeDashoffset: totalLength,
+      })
+
+      const timeline = gsap.timeline({ paused: true })
+
+      timeline.to(ring, {
+        strokeDashoffset: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        force3D: true,
+      })
+
+      timelines.set(card, timeline)
+
+      const handleMouseEnter = () => {
+        timeline.play(0)
+      }
+
+      const handleMouseLeave = () => {
+        timeline.reverse()
+      }
+
+      eventHandlers.set(card, { handleMouseEnter, handleMouseLeave })
+
+      card.addEventListener("mouseenter", handleMouseEnter)
+      card.addEventListener("mouseleave", handleMouseLeave)
+    })
+
+    return () => {
+      linkCards.forEach((card) => {
+        const timeline = timelines.get(card)
+        if (timeline) {
+          timeline.kill()
+        }
+        const handlers = eventHandlers.get(card)
+        if (handlers) {
+          card.removeEventListener("mouseenter", handlers.handleMouseEnter)
+          card.removeEventListener("mouseleave", handlers.handleMouseLeave)
+        }
+      })
+    }
+  }, [songs])
 
   return (
-    <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <div className="w-full max-w-4xl px-6 md:px-0 relative z-10 py-12 pb-32">
       <div className="mb-16">
         <h2
           className="font-mono text-[10px] tracking-[0.6em] uppercase mb-4"
@@ -54,138 +151,81 @@ const Works = memo(function Works() {
         </h1>
       </div>
 
-      <div
-        ref={containerRef}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16"
-      >
-        <div className="group cursor-pointer">
-          <ImageCard
-            image="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698811973-912f7d4c/_____2026-01-29_214737.png"
-            alt="Void Frequency"
-          >
-            <div className="absolute bottom-0 left-0 p-6 w-full">
-              <p className="font-mono text-[9px] tracking-[0.3em] text-white/50 mb-2">
-                EP. 01 / VOID FREQUENCY
-              </p>
-              <h3 className="font-light text-2xl text-white group-hover:text-cyan-400 transition-colors">
-                Ghost In The Signal
-              </h3>
-            </div>
-          </ImageCard>
-          <p
-            className="font-mono text-[10px] leading-relaxed uppercase tracking-widest"
-            style={{ color: "var(--muted)" }}
-          >
-            Deep frequency analysis exploring the gaps between analog noise.
-          </p>
-        </div>
+      <div ref={containerRef} className="grid grid-cols-1 gap-4">
+        {loading ? (
+          <div className="col-span-full text-center py-12">
+            <p
+              className="font-mono text-[10px] tracking-[0.3em] uppercase"
+              style={{ color: "var(--muted)" }}
+            >
+              Loading...
+            </p>
+          </div>
+        ) : songs.length === 0 ? (
+          <div className="col-span-full text-center py-12">
+            <p
+              className="font-mono text-[10px] tracking-[0.3em] uppercase"
+              style={{ color: "var(--muted)" }}
+            >
+              No songs found
+            </p>
+          </div>
+        ) : (
+          songs.map((song, index) => {
+            const epTitles = [
+              "VOID FREQUENCY",
+              "BOTANICAL SYNTH",
+              "INDUSTRIAL ECHO",
+              "SPRING-LIKE",
+              "GROUNDED",
+              "BLOOM",
+            ]
 
-        <div className="group cursor-pointer">
-          <ImageCard
-            image="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809239-20c1f692/_____2026-01-29_213557.png"
-            alt="Spring Like"
-          >
-            <div className="absolute bottom-0 left-0 p-6 w-full">
-              <p className="font-mono text-[9px] tracking-[0.3em] text-white/50 mb-2">
-                EP. 02 / BOTANICAL SYNTH
-              </p>
-              <h3 className="font-light text-2xl text-white group-hover:text-cyan-400 transition-colors">
-                Organic Growth
-              </h3>
-            </div>
-          </ImageCard>
-          <p
-            className="font-mono text-[10px] leading-relaxed uppercase tracking-widest"
-            style={{ color: "var(--muted)" }}
-          >
-            Synthesis of plant neuro-signals recorded in the Amazon Basin.
-          </p>
-        </div>
-
-        <div className="group cursor-pointer">
-          <ImageCard
-            image="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809584-8018261f/_____2026-01-29_214148.png"
-            alt="Metallic Pulse"
-          >
-            <div className="absolute bottom-0 left-0 p-6 w-full">
-              <p className="font-mono text-[9px] tracking-[0.3em] text-white/50 mb-2">
-                EP. 03 / INDUSTRIAL ECHO
-              </p>
-              <h3 className="font-light text-2xl text-white group-hover:text-cyan-400 transition-colors">
-                Steel Rain
-              </h3>
-            </div>
-          </ImageCard>
-          <p
-            className="font-mono text-[10px] leading-relaxed uppercase tracking-widest"
-            style={{ color: "var(--muted)" }}
-          >
-            Cold textures meet rhythmic distortion. A study in isolation.
-          </p>
-        </div>
-
-        <div className="group cursor-pointer">
-          <ImageCard
-            image="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809845-62572e03/_____2026-01-29_214255.png"
-            alt="Spring-Like"
-          >
-            <div className="absolute bottom-0 left-0 p-6 w-full">
-              <p className="font-mono text-[9px] tracking-[0.3em] text-white/50 mb-2">
-                EP. 04 / SPRING-LIKE
-              </p>
-              <h3 className="font-light text-2xl text-white group-hover:text-cyan-400 transition-colors">
-                Botanical Distortion
-              </h3>
-            </div>
-          </ImageCard>
-          <p
-            className="font-mono text-[10px] leading-relaxed uppercase tracking-widest"
-            style={{ color: "var(--muted)" }}
-          >
-            The flagship reconstruction of organic audio signatures.
-          </p>
-        </div>
-
-        <div className="group cursor-pointer">
-          <ImageCard
-            image="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698810147-8f7bb194/_____2026-01-29_214427.png"
-            alt="Deep Root"
-          >
-            <div className="absolute bottom-0 left-0 p-6 w-full">
-              <p className="font-mono text-[9px] tracking-[0.3em] text-white/50 mb-2">
-                EP. 05 / GROUNDED
-              </p>
-              <h3 className="font-light text-2xl text-white group-hover:text-cyan-400 transition-colors">
-                Root System
-              </h3>
-            </div>
-          </ImageCard>
-          <p className="font-mono text-[10px] text-zinc-500 leading-relaxed uppercase tracking-widest">
-            Sub-bass exploration of tectonic movement and soil vibration.
-          </p>
-        </div>
-
-        <div className="group cursor-pointer">
-          <ImageCard
-            image="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698810455-2e0698b4/_____2026-01-29_214626.png"
-            alt="Glitch Bloom"
-          >
-            <div className="absolute bottom-0 left-0 p-6 w-full">
-              <p className="font-mono text-[9px] tracking-[0.3em] text-white/50 mb-2">
-                EP. 06 / BLOOM
-              </p>
-              <h3 className="font-light text-2xl text-white group-hover:text-cyan-400 transition-colors">
-                Fluorescent Flora
-              </h3>
-            </div>
-          </ImageCard>
-          <p
-            className="font-mono text-[10px] leading-relaxed uppercase tracking-widest"
-            style={{ color: "var(--muted)" }}
-          >
-            Visual-audio mapping of bioluminescent plant species.
-          </p>
-        </div>
+            return (
+              <a
+                key={song.id}
+                href={`https://music.163.com/song?id=${song.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-card relative flex items-center justify-between p-6 hover:bg-zinc-900/30 rounded-lg transition-all"
+              >
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  style={{ borderRadius: "0.5rem" }}
+                >
+                  <rect
+                    x="1"
+                    y="1"
+                    width="calc(100% - 2px)"
+                    height="calc(100% - 2px)"
+                    rx="7"
+                    ry="7"
+                    fill="none"
+                    className="ring-border"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    style={{
+                      color: "var(--ring-border)",
+                      transition: "color 0.3s ease",
+                    }}
+                  />
+                </svg>
+                <div className="relative z-10">
+                  <p className="font-mono text-[9px] tracking-[0.3em] text-zinc-600 dark:text-zinc-400 mb-2">
+                    EP. {String(index + 1).padStart(2, "0")} /{" "}
+                    {song.al && song.al.name
+                      ? song.al.name.toUpperCase()
+                      : epTitles[index % epTitles.length]}
+                  </p>
+                  <h3 className="font-medium text-2xl text-zinc-800 dark:text-white hover:text-cyan-500 dark:hover:text-cyan-500 transition-colors">
+                    {song.name}
+                  </h3>
+                </div>
+                <ArrowUpRight className="relative z-10 text-zinc-400 dark:text-zinc-500 hover:text-cyan-500 transition-colors" />
+              </a>
+            )
+          })
+        )}
       </div>
 
       <div className="pb-24 md:pb-32"></div>
