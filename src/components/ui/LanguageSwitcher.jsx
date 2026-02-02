@@ -8,7 +8,10 @@ const LanguageSwitcher = memo(function LanguageSwitcher() {
 
   useEffect(() => {
     document.documentElement.lang = locale
-  }, [locale])
+    if (i18n.language !== locale) {
+      i18n.changeLanguage(locale)
+    }
+  }, [locale, i18n.language, i18n])
 
   const handleLanguageChange = () => {
     const newLocale = locale === "zh" ? "en" : "zh"

@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware"
 const useLocaleStore = create(
   persist(
     (set, get) => ({
-      locale: "zh",
+      locale: "en",
       setLocale: (locale) => set({ locale }),
       toggleLocale: () => {
         const { locale } = get()
