@@ -32,7 +32,16 @@ function Player() {
   useEffect(() => {
     import("../../data/songs.json")
       .then(({ default: songs }) => {
-        usePlayerStore.getState().setPlaylist(songs)
+        const playerStore = usePlayerStore.getState()
+        playerStore.setPlaylist(songs)
+        // 加载播放列表后，直接设置第一首歌作为 currentSong，不触发播放
+        if (songs.length > 0 && !playerStore.currentSong) {
+          // 使用 Zustand 的 set 方法更新状态
+          usePlayerStore.setState({
+            currentSong: songs[0],
+            currentIndex: 0,
+          })
+        }
       })
       .catch((err) => console.error("Failed to load songs:", err))
   }, [])

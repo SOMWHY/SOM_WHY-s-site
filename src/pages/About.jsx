@@ -12,7 +12,7 @@ const About = memo(function About() {
   useEffect(() => {
     if (typewriterTextRef.current) {
       const targetText =
-        "Organic textures collide with clinical precision. A sonic exploration of the tension between biological growth and synthetic decay."
+        "I'm SOM_WHY, crafting warm, quiet worlds from sound—where organic textures meet clinical precision, exploring biological growth versus synthetic decay."
 
       // Start with empty string
       typewriterTextRef.current.textContent = ""
@@ -110,7 +110,9 @@ const About = memo(function About() {
                 style={{ color: "var(--muted)" }}
               >
                 <span ref={typewriterTextRef}>
-                  I'm SOM_WHY, crafting warm, quiet worlds from sound—where organic textures meet clinical precision, exploring biological growth versus synthetic decay.
+                  I'm SOM_WHY, crafting warm, quiet worlds from sound—where
+                  organic textures meet clinical precision, exploring biological
+                  growth versus synthetic decay.
                 </span>
                 <span ref={cursorRef} className="ml-1 inline-block">
                   |
