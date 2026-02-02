@@ -42,43 +42,127 @@ const Photos = memo(function Photos() {
 
   const imagesArray = [
     {
-      src: "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698810147-8f7bb194/_____2026-01-29_214427.png",
+      src: "src/assets/null-1b04beaeed90173e.webp",
       name: "Synthesis Phase I",
       width: 1024,
       height: 1024,
     },
     {
-      src: "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809584-8018261f/_____2026-01-29_214148.png",
+      src: "src/assets/null-2eafa050439c7635.webp",
       name: "Geometric Resonance",
       width: 1024,
       height: 1024,
     },
     {
-      src: "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698813626-7c12c354/_____2026-01-29_214901.png",
+      src: "src/assets/null-6b1b4065f588152f.webp",
       name: "Organic Distortion",
       width: 1024,
       height: 1024,
     },
     {
-      src: "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809845-62572e03/_____2026-01-29_214255.png",
+      src: "src/assets/null-6c0259fdb4e6a418.webp",
       name: "Spring Propagation",
       width: 1024,
       height: 1024,
     },
     {
-      src: "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698810455-2e0698b4/_____2026-01-29_214626.png",
+      src: "src/assets/null-10eb6585e10f2207.webp",
       name: "Digital Bloom",
       width: 1024,
       height: 1024,
     },
     {
-      src: "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809239-20c1f692/_____2026-01-29_213557.png",
+      src: "src/assets/null-26dec620bdbd4947.webp",
       name: "Frequency Mapping",
       width: 1024,
       height: 1024,
     },
     {
-      src: "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698811973-912f7d4c/_____2026-01-29_214737.png",
+      src: "src/assets/null-33cb9df3bbc0c458.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-51e34fc69a518a71.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-f5a331fdbf5053e.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-2bb22a3bf55a40eb.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-2cfea00e747f76f.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-2f413a18423e2f56.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-2fcb6271cd5da46b.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-5c3f45981a94e52f.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-9bef06dffebdf12.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-36a0c8415048e93d.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-61ad2acbea908c1c.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-173dd80a2b528fe6.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-547b4855305b3b08.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-57534381b9ebe35a.webp",
+      name: "Deep Bass Structure",
+      width: 1024,
+      height: 1024,
+    },
+    {
+      src: "src/assets/null-795854498ad0dbf6.webp",
       name: "Deep Bass Structure",
       width: 1024,
       height: 1024,
@@ -97,7 +181,7 @@ const Photos = memo(function Photos() {
       </div>
 
       <div ref={containerRef}>
-        <Masonry columns={4} gutterInPx={16} customContainerClass={"w-full"}>
+        <Masonry gutterInPx={16} customContainerClass={"w-full"}>
           {imagesArray.map((image, index) => (
             <div key={index} className="mb-4">
               <ImageCard

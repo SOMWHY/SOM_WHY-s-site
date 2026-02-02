@@ -10,18 +10,16 @@ const Links = memo(function Links() {
   // 为每个链接定义预览图像
   const linkImages = useMemo(
     () => ({
-      spotify:
-        "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=400&q=80",
-      soundcloud:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=400&q=80",
-      instagram:
-        "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=400&q=80",
-      twitter:
-        "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=400&q=80",
-      bandcamp:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=400&q=80",
+      github:
+        "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=400&auto=format&fit=crop&q=80",
+      neteasecloudmusic:
+        "https://images.unsplash.com/photo-1652626627230-d7ddb64bf9e9?w=400&auto=format&fit=crop&q=80",
+      bilibili:
+        "https://plus.unsplash.com/premium_photo-1664392122271-a1aedb05a7c6?w=400&auto=format&fit=crop&q=80",
+      loopspace:
+        "https://images.unsplash.com/photo-1578357078586-491adf1aa5ba?w=400&auto=format&fit=crop&q=80",
       youtube:
-        "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=400&q=80",
+        "https://images.unsplash.com/photo-1540655037529-dec987208707?w=400&auto=format&fit=crop&q=80",
     }),
     [],
   )
@@ -137,9 +135,9 @@ const Links = memo(function Links() {
       <header className="mb-16 text-center">
         <h1
           className="glitch-text font-mono text-3xl md:text-5xl uppercase mb-4 no-select"
-          data-text="CONNECTIONS"
+          data-text="CONNECTION"
         >
-          CONNECTIONS
+          CONNECTION
         </h1>
         <p className="font-mono text-[10px] tracking-[0.4em] text-zinc-500 uppercase font-light">
           Digital Frequency Access
@@ -148,7 +146,8 @@ const Links = memo(function Links() {
 
       <div className="grid grid-cols-1 gap-4">
         <a
-          href="#"
+          href="https://github.com/SOMWHY/SOM_WHY-s-site"
+          target="_blank"
           className="link-card flex items-center justify-between p-6 hover:bg-zinc-900/50 rounded-lg transition-all"
           ref={(el) => (linkRefs.current[0] = el)}
         >
@@ -170,14 +169,15 @@ const Links = memo(function Links() {
               <path d="M12 6v6l4 2"></path>
             </svg>
             <span className="font-mono text-sm tracking-[0.2em] uppercase">
-              Spotify
+              GitHub
             </span>
           </div>
           <ArrowUpRight className="text-zinc-600" />
         </a>
 
         <a
-          href="#"
+          href="https://music.163.com/#/artist?id=35889036"
+          target="_blank"
           className="link-card flex items-center justify-between p-6 hover:bg-zinc-900/50 rounded-lg transition-all"
           ref={(el) => (linkRefs.current[1] = el)}
         >
@@ -199,14 +199,15 @@ const Links = memo(function Links() {
               <path d="m7 10 3 3-3 3"></path>
             </svg>
             <span className="font-mono text-sm tracking-[0.2em] uppercase">
-              SoundCloud
+              NetEase Cloud Music
             </span>
           </div>
           <ArrowUpRight className="text-zinc-600" />
         </a>
 
         <a
-          href="#"
+          href="https://space.bilibili.com/394014714?spm_id_from=333.1007.0.0"
+          target="_blank"
           className="link-card flex items-center justify-between p-6 hover:bg-zinc-900/50 rounded-lg transition-all"
           ref={(el) => (linkRefs.current[2] = el)}
         >
@@ -228,14 +229,15 @@ const Links = memo(function Links() {
               <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
             </svg>
             <span className="font-mono text-sm tracking-[0.2em] uppercase">
-              Instagram
+              Bilibili
             </span>
           </div>
           <ArrowUpRight className="text-zinc-600" />
         </a>
 
         <a
-          href="#"
+          href="https://somwhy.loopspace.club"
+          target="_blank"
           className="link-card flex items-center justify-between p-6 hover:bg-zinc-900/50 rounded-lg transition-all"
           ref={(el) => (linkRefs.current[3] = el)}
         >
@@ -255,43 +257,17 @@ const Links = memo(function Links() {
               <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
             </svg>
             <span className="font-mono text-sm tracking-[0.2em] uppercase">
-              Twitter / X
+              Loopspace
             </span>
           </div>
           <ArrowUpRight className="text-zinc-600" />
         </a>
 
         <a
-          href="#"
+          href="https://www.youtube.com/@%E7%B4%A2%E5%A7%86%E6%AD%AA"
+          target="_blank"
           className="link-card flex items-center justify-between p-6 hover:bg-zinc-900/50 rounded-lg transition-all"
           ref={(el) => (linkRefs.current[4] = el)}
-        >
-          <div className="flex items-center gap-6">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-2xl text-zinc-400"
-            >
-              <path d="M12 2v20M2 12h20"></path>
-            </svg>
-            <span className="font-mono text-sm tracking-[0.2em] uppercase">
-              Bandcamp
-            </span>
-          </div>
-          <ArrowUpRight className="text-zinc-600" />
-        </a>
-
-        <a
-          href="#"
-          className="link-card flex items-center justify-between p-6 hover:bg-zinc-900/50 rounded-lg transition-all"
-          ref={(el) => (linkRefs.current[5] = el)}
         >
           <div className="flex items-center gap-6">
             <svg

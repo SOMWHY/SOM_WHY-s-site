@@ -100,19 +100,17 @@ const About = memo(function About() {
                 className="font-mono text-[10px] tracking-[0.5em] uppercase"
                 style={{ color: "var(--muted)" }}
               >
-                The Architect
+                The Profile
               </h2>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tighter">
-                BOTANICA
+                ABOUT
               </h1>
               <div
                 className="font-mono text-sm md:text-base leading-relaxed max-w-lg h-20"
                 style={{ color: "var(--muted)" }}
               >
                 <span ref={typewriterTextRef}>
-                  Organic textures collide with clinical precision. A sonic
-                  exploration of the tension between biological growth and
-                  synthetic decay.
+                  I'm SOM_WHY, crafting warm, quiet worlds from sound—where organic textures meet clinical precision, exploring biological growth versus synthetic decay.
                 </span>
                 <span ref={cursorRef} className="ml-1 inline-block">
                   |
@@ -168,7 +166,7 @@ const About = memo(function About() {
                   className="font-mono text-[11px] leading-relaxed uppercase"
                   style={{ color: "var(--muted)" }}
                 >
-                  Glitch-Hop / Ambient / Industrial / Organic Reconstruction
+                  House / Ambient / Botanica / Post Rock
                 </p>
               </div>
             </div>

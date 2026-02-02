@@ -22,7 +22,7 @@ const Footer = memo(function Footer() {
     >
       <div className="flex items-center gap-8">
         <a
-          href="https://github.com"
+          href="https://github.com/SOMWHY/SOM_WHY-s-site"
           target="_blank"
           rel="noopener noreferrer"
           className="text-zinc-400 hover:text-current transition-all"

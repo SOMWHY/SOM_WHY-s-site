@@ -7,8 +7,8 @@ const Contact = memo(function Contact() {
   return (
     <div className="w-full max-w-4xl px-6 md:px-12 flex flex-col md:flex-row gap-12 md:gap-24 items-center py-12 pb-32">
       <div className="w-full md:w-1/3 space-y-4">
-        <span className="font-mono text-[9px] tracking-[0.4em] text-zinc-500 uppercase">
-          Transmission
+        <span className="font-mono text-[9px] tracking-[0.4em] text-zinc-500 font-bold">
+          Email:1928135011@qq.com
         </span>
         <h1
           className="glitch-text font-mono text-4xl md:text-6xl uppercase no-select"
