@@ -1,14 +1,39 @@
-import React, { memo, useState, useEffect, useRef } from "react"
+import React, { memo, useState, useEffect, useRef, useMemo } from "react"
 import { ArrowUpRight } from "lucide-react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useTranslation } from "react-i18next"
+import { containsChinese } from "../utils/textUtils"
 
 gsap.registerPlugin(ScrollTrigger)
 
 const Works = memo(function Works() {
+  const { t } = useTranslation("works")
   const containerRef = useRef(null)
   const [songs, setSongs] = useState([])
   const [loading, setLoading] = useState(true)
+
+  const sectionText = t("section")
+  const titleText = t("title")
+  const loadingText = t("loading")
+  const noSongsText = t("noSongs")
+
+  const sectionClassName = useMemo(
+    () => (containsChinese(sectionText) ? "font-mono-zh" : "font-mono"),
+    [sectionText],
+  )
+  const titleClassName = useMemo(
+    () => (containsChinese(titleText) ? "font-mono-zh" : ""),
+    [titleText],
+  )
+  const loadingClassName = useMemo(
+    () => (containsChinese(loadingText) ? "font-mono-zh" : "font-mono"),
+    [loadingText],
+  )
+  const noSongsClassName = useMemo(
+    () => (containsChinese(noSongsText) ? "font-mono-zh" : "font-mono"),
+    [noSongsText],
+  )
 
   useEffect(() => {
     const fetchSongs = async () => {
@@ -135,19 +160,19 @@ const Works = memo(function Works() {
     <div className="w-full max-w-4xl px-6 md:px-0 relative z-10 py-12 pb-32">
       <div className="mb-16">
         <h2
-          className="font-mono text-[10px] tracking-[0.6em] uppercase mb-4"
+          className={`${sectionClassName} text-[10px] tracking-[0.6em] uppercase mb-4`}
           style={{ color: "var(--muted)" }}
         >
-          SELECTED PRODUCTIONS
+          {t("section")}
         </h2>
         <h1
-          className="text-4xl md:text-6xl font-mono text-transparent bg-clip-text bg-gradient-to-r uppercase"
+          className={`${titleClassName} text-4xl md:text-6xl font-mono text-transparent bg-clip-text bg-gradient-to-r uppercase`}
           style={{
             backgroundImage:
               "linear-gradient(to right, var(--text), var(--muted))",
           }}
         >
-          Audio Works
+          {t("title")}
         </h1>
       </div>
 
@@ -155,31 +180,24 @@ const Works = memo(function Works() {
         {loading ? (
           <div className="col-span-full text-center py-12">
             <p
-              className="font-mono text-[10px] tracking-[0.3em] uppercase"
+              className={`${loadingClassName} text-[10px] tracking-[0.3em] uppercase`}
               style={{ color: "var(--muted)" }}
             >
-              Loading...
+              {t("loading")}
             </p>
           </div>
         ) : songs.length === 0 ? (
           <div className="col-span-full text-center py-12">
             <p
-              className="font-mono text-[10px] tracking-[0.3em] uppercase"
+              className={`${noSongsClassName} text-[10px] tracking-[0.3em] uppercase`}
               style={{ color: "var(--muted)" }}
             >
-              No songs found
+              {t("noSongs")}
             </p>
           </div>
         ) : (
           songs.map((song, index) => {
-            const epTitles = [
-              "VOID FREQUENCY",
-              "BOTANICAL SYNTH",
-              "INDUSTRIAL ECHO",
-              "SPRING-LIKE",
-              "GROUNDED",
-              "BLOOM",
-            ]
+            const epTitles = t("epTitles", { returnObjects: true })
 
             return (
               <a

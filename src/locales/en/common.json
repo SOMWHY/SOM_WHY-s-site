@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "home": "Home",
+    "works": "Works",
+    "about": "About",
+    "contact": "Contact",
+    "links": "Connection",
+    "photos": "Photos",
+    "close": "Close"
+  },
+  "common": {
+    "loading": "Loading...",
+    "noData": "No data available",
+    "readMore": "Read more",
+    "established": "Established",
+    "copyright": "All Rights Reserved",
+    "rightsReserved": "All Rights Reserved",
+    "transmissionActive": "Transmission Active",
+    "visualFrequency": "Visual Frequency Established"
+  }
+}

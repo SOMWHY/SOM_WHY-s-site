@@ -1,18 +1,41 @@
-import React, { memo, useRef, useEffect } from "react"
+import React, { memo, useRef, useEffect, useMemo } from "react"
 import gsap from "gsap"
 import { TextPlugin } from "gsap/TextPlugin"
+import { useTranslation } from "react-i18next"
+import { getGlitchTextClassName, containsChinese } from "../utils/textUtils"
 
 gsap.registerPlugin(TextPlugin)
 
 const Home = memo(function Home() {
+  const { t } = useTranslation("home")
   const reconstructionTextRef = useRef(null)
+
+  const titleText = t("title")
+  const subtitleText = t("subtitle")
+  const epText = t("ep")
+  const descriptionText = t("description")
+
+  const titleClassName = useMemo(
+    () => getGlitchTextClassName(titleText),
+    [titleText],
+  )
+  const subtitleClassName = useMemo(
+    () => (containsChinese(subtitleText) ? "font-mono-zh" : "font-mono"),
+    [subtitleText],
+  )
+  const epClassName = useMemo(
+    () => (containsChinese(epText) ? "font-mono-zh" : "font-mono"),
+    [epText],
+  )
+  const descriptionClassName = useMemo(
+    () => (containsChinese(descriptionText) ? "font-mono-zh" : "font-mono"),
+    [descriptionText],
+  )
 
   useEffect(() => {
     if (reconstructionTextRef.current) {
-      // Create scramble text animation
-      const targetText = "[ ORGANIC AUDIO RECONSTRUCTION ]"
+      const targetText = subtitleText
 
-      // Start with random characters
       reconstructionTextRef.current.textContent =
         "[ " +
         Array.from({ length: 26 }, () =>
@@ -20,7 +43,6 @@ const Home = memo(function Home() {
         ).join("") +
         " ]"
 
-      // Animate to target text with scramble effect
       gsap.to(reconstructionTextRef.current, {
         duration: 6,
         text: {
@@ -33,7 +55,7 @@ const Home = memo(function Home() {
         ease: "power1.inOut",
       })
     }
-  }, [])
+  }, [subtitleText])
 
   return (
     <div className="w-full max-w-4xl flex flex-col items-center px-6 md:px-12">
@@ -116,21 +138,21 @@ const Home = memo(function Home() {
           {/* Fixed Center Text Overlay */}
           <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-start text-center p-4 z-[50] pointer-events-none">
             <h1
-              className="glitch-text font-mono text-2xl sm:text-4xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap uppercase no-select"
-              data-text="SPRING-LIKE"
+              className={`${titleClassName} font-mono text-2xl sm:text-4xl md:text-6xl lg:text-7xl mb-4 whitespace-nowrap uppercase no-select`}
+              data-text={t("title")}
               style={{
                 color: "white",
                 WebkitTextStroke: "1px black",
                 textStroke: "1px black",
               }}
             >
-              SPRING-LIKE
+              {t("title")}
             </h1>
             <p
               ref={reconstructionTextRef}
-              className="font-mono text-[9px] md:text-[11px] tracking-[0.4em] text-white/80 uppercase font-extralight mt-2"
+              className={`${subtitleClassName} text-[9px] md:text-[11px] tracking-[0.4em] text-white/80 uppercase font-extralight mt-2`}
             >
-              [ ORGANIC AUDIO RECONSTRUCTION ]
+              {t("subtitle")}
             </p>
           </div>
 
@@ -181,11 +203,15 @@ const Home = memo(function Home() {
 
           {/* Bottom Context */}
           <div className="mt-8 flex flex-col md:flex-row justify-between items-start gap-4">
-            <div className="font-mono text-[9px] md:text-[11px] font-light text-zinc-500 uppercase tracking-widest">
-              EP. 04 / Botanical Synthesis
+            <div
+              className={`${epClassName} text-[9px] md:text-[11px] font-light text-zinc-500 uppercase tracking-widest`}
+            >
+              {t("ep")}
             </div>
-            <div className="font-mono text-[9px] md:text-[11px] font-light text-zinc-600 leading-relaxed uppercase tracking-widest max-w-xs text-right hidden md:block">
-              Rooted in the resonance of absolute silence.
+            <div
+              className={`${descriptionClassName} text-[9px] md:text-[11px] font-light text-zinc-600 leading-relaxed uppercase tracking-widest max-w-xs text-right hidden md:block`}
+            >
+              {t("description")}
             </div>
           </div>
         </div>

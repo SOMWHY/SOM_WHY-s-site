@@ -1,0 +1,24 @@
+{
+  "section": "The Profile",
+  "title": "关于",
+  "intro": "你可以叫我索姆歪，我用声音构建温暖静谧的世界——有机的肌理，精密的控制，生长与衰败。",
+  "manifesto": {
+    "title": "Creative Manifesto",
+    "content": "“在静默的间隙寻找音乐。每个频率都是生长，每次失真都是风暴。我们不作曲，我们营造声景，直至它们自己开始呼吸。”"
+  },
+  "disciplines": {
+    "title": "Disciplines",
+    "soundDesign": "Sound Design",
+    "granularSynthesis": "Granular Synthesis",
+    "fieldRecording": "Field Recording",
+    "mixing": "Mixing"
+  },
+  "audioDNA": {
+    "title": "Audio DNA",
+    "content": "House / Ambient / Botanica / Post Rock"
+  },
+  "serialNo": {
+    "label": "SERIAL NO.",
+    "value": "BTNC_772"
+  }
+}

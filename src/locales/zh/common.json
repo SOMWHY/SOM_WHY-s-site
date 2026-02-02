@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "home": "首页",
+    "works": "作品",
+    "about": "关于",
+    "contact": "联系",
+    "links": "连接",
+    "photos": "显影",
+    "close": "关闭"
+  },
+  "common": {
+    "loading": "加载中...",
+    "noData": "暂无数据",
+    "readMore": "阅读更多",
+    "established": "Established",
+    "copyright": "All Rights Reserved",
+    "rightsReserved": "All Rights Reserved",
+    "transmissionActive": "Transmission Active",
+    "visualFrequency": "Visual Frequency Established"
+  }
+}

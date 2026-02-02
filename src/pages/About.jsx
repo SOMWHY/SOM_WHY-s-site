@@ -1,24 +1,35 @@
-import React, { memo, useRef, useEffect } from "react"
+import React, { memo, useRef, useEffect, useMemo } from "react"
 import gsap from "gsap"
 import { TextPlugin } from "gsap/TextPlugin"
+import { useTranslation } from "react-i18next"
 import { ImageCard } from "../components"
+import { containsChinese } from "../utils/textUtils"
 
 gsap.registerPlugin(TextPlugin)
 
 const About = memo(function About() {
+  const { t } = useTranslation("about")
   const typewriterTextRef = useRef(null)
   const cursorRef = useRef(null)
 
+  const introText = t("intro")
+  const manifestoContentText = t("manifesto.content")
+
+  const introClassName = useMemo(
+    () => (containsChinese(introText) ? "font-mono-zh" : "font-mono"),
+    [introText],
+  )
+  const manifestoContentClassName = useMemo(
+    () => (containsChinese(manifestoContentText) ? "font-mono-zh" : ""),
+    [manifestoContentText],
+  )
+
   useEffect(() => {
     if (typewriterTextRef.current) {
-      const targetText =
-        "I'm SOM_WHY, crafting warm, quiet worlds from sound—where organic textures meet clinical precision, exploring biological growth versus synthetic decay."
+      const targetText = introText
 
-      // Start with empty string
       typewriterTextRef.current.textContent = ""
 
-      // Animate to target text with typewriter effect
-      // Adjust duration for moderate typing speed
       gsap.to(typewriterTextRef.current, {
         duration: 2.5,
         text: targetText,
@@ -26,7 +37,6 @@ const About = memo(function About() {
       })
     }
 
-    // Add cursor blinking animation
     if (cursorRef.current) {
       gsap.to(cursorRef.current, {
         opacity: 0,
@@ -35,7 +45,7 @@ const About = memo(function About() {
         yoyo: true,
       })
     }
-  }, [])
+  }, [introText])
 
   return (
     <div className="w-full max-w-6xl flex flex-col px-6 md:px-12 py-12 pb-32">
@@ -86,10 +96,10 @@ const About = memo(function About() {
             />
             <div className="absolute bottom-8 right-8 text-right">
               <span className="font-mono text-[10px] tracking-[0.4em] text-white/50 block mb-2">
-                SERIAL NO.
+                {t("serialNo.label")}
               </span>
               <span className="font-mono text-xl md:text-2xl text-white">
-                BTNC_772
+                {t("serialNo.value")}
               </span>
             </div>
           </div>
@@ -100,20 +110,16 @@ const About = memo(function About() {
                 className="font-mono text-[10px] tracking-[0.5em] uppercase"
                 style={{ color: "var(--muted)" }}
               >
-                The Profile
+                {t("section")}
               </h2>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tighter">
-                ABOUT
+                {t("title")}
               </h1>
               <div
-                className="font-mono text-sm md:text-base leading-relaxed max-w-lg h-20"
+                className={`${introClassName} text-sm md:text-base leading-relaxed max-w-lg h-20`}
                 style={{ color: "var(--muted)" }}
               >
-                <span ref={typewriterTextRef}>
-                  I'm SOM_WHY, crafting warm, quiet worlds from sound—where
-                  organic textures meet clinical precision, exploring biological
-                  growth versus synthetic decay.
-                </span>
+                <span ref={typewriterTextRef}>{t("intro")}</span>
                 <span ref={cursorRef} className="ml-1 inline-block">
                   |
                 </span>
@@ -125,12 +131,12 @@ const About = memo(function About() {
                 className="font-mono text-[9px] tracking-[0.4em] uppercase border-b border-white/10 pb-2"
                 style={{ color: "var(--muted)" }}
               >
-                Creative Manifesto
+                {t("manifesto.title")}
               </h3>
-              <p className="text-xl md:text-2xl font-light leading-snug italic">
-                "I find music in the gaps between silence. Every frequency is a
-                sprout, every distortion is a storm. We don't compose; we
-                cultivate soundscapes until they breathe on their own."
+              <p
+                className={`${manifestoContentClassName} text-xl md:text-2xl font-light leading-snug italic`}
+              >
+                {t("manifesto.content")}
               </p>
             </div>
 
@@ -140,20 +146,20 @@ const About = memo(function About() {
                   className="font-mono text-[9px] tracking-[0.4em] uppercase"
                   style={{ color: "var(--muted)" }}
                 >
-                  Disciplines
+                  {t("disciplines.title")}
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   <span className="skill-tag px-3 py-1 font-mono text-[10px] uppercase tracking-wider">
-                    Sound Design
+                    {t("disciplines.soundDesign")}
                   </span>
                   <span className="skill-tag px-3 py-1 font-mono text-[10px] uppercase tracking-wider">
-                    Granular Synthesis
+                    {t("disciplines.granularSynthesis")}
                   </span>
                   <span className="skill-tag px-3 py-1 font-mono text-[10px] uppercase tracking-wider">
-                    Field Recording
+                    {t("disciplines.fieldRecording")}
                   </span>
                   <span className="skill-tag px-3 py-1 font-mono text-[10px] uppercase tracking-wider">
-                    Mixing
+                    {t("disciplines.mixing")}
                   </span>
                 </div>
               </div>
@@ -162,13 +168,13 @@ const About = memo(function About() {
                   className="font-mono text-[9px] tracking-[0.4em] uppercase"
                   style={{ color: "var(--muted)" }}
                 >
-                  Audio DNA
+                  {t("audioDNA.title")}
                 </h4>
                 <p
                   className="font-mono text-[11px] leading-relaxed uppercase"
                   style={{ color: "var(--muted)" }}
                 >
-                  House / Ambient / Botanica / Post Rock
+                  {t("audioDNA.content")}
                 </p>
               </div>
             </div>

@@ -1,11 +1,15 @@
-import React, { memo, useState, useRef, useEffect } from "react"
+import React, { memo, useState, useRef, useEffect, useMemo } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { X, Sun, Moon } from "lucide-react"
 import gsap from "gsap"
 import { useApp } from "../../hooks/useApp"
+import { useTranslation } from "react-i18next"
+import LanguageSwitcher from "../ui/LanguageSwitcher"
+import { containsChinese } from "../../utils/textUtils"
 
 const Header = memo(function Header({ onNavigate }) {
   const { isDarkMode, toggleTheme } = useApp()
+  const { t } = useTranslation("common")
   const [_IS_MENU_OPEN, setIsMenuOpen] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
   const location = useLocation()
@@ -15,6 +19,17 @@ const Header = memo(function Header({ onNavigate }) {
   const logoRef = useRef(null)
   const logoCharsRef = useRef([])
   const navLinkRefs = useRef({})
+
+  const navLinkClassName = useMemo(() => {
+    const hasChinese = [
+      t("nav.works"),
+      t("nav.about"),
+      t("nav.contact"),
+      t("nav.links"),
+      t("nav.photos"),
+    ].some((text) => containsChinese(text))
+    return hasChinese ? "font-mono-zh" : "font-mono"
+  }, [t])
 
   const toggleMenu = () => {
     if (isAnimating) return
@@ -184,13 +199,12 @@ const Header = memo(function Header({ onNavigate }) {
     const links = navLinkRefs.current
     const cleanupFunctions = []
 
-    // Define original text for each link
     const linkTexts = {
-      works: "Works",
-      about: "About",
-      contact: "Contact",
-      links: "Connection",
-      photos: "Photos",
+      works: t("nav.works"),
+      about: t("nav.about"),
+      contact: t("nav.contact"),
+      links: t("nav.links"),
+      photos: t("nav.photos"),
     }
 
     Object.keys(links).forEach((key) => {
@@ -323,7 +337,7 @@ const Header = memo(function Header({ onNavigate }) {
     return () => {
       cleanupFunctions.forEach((cleanup) => cleanup())
     }
-  }, [location.pathname])
+  }, [location.pathname, t])
 
   return (
     <>
@@ -406,6 +420,9 @@ const Header = memo(function Header({ onNavigate }) {
         <div className="flex-1 flex justify-end">
           {/* Controls */}
           <div className="hidden lg:flex items-center space-x-6">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -432,6 +449,9 @@ const Header = memo(function Header({ onNavigate }) {
 
         {/* Mobile Controls */}
         <div className="lg:hidden flex items-center space-x-4">
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
@@ -467,14 +487,14 @@ const Header = memo(function Header({ onNavigate }) {
             onClick={closeMenu}
             className="absolute top-10 right-10 md:right-16 text-zinc-500 hover:text-current flex items-center gap-2 font-mono text-[10px] tracking-[0.4em] uppercase transition-all"
           >
-            Close <X className="text-xl" />
+            {t("nav.close")} <X className="text-xl" />
           </button>
 
           <nav className="flex flex-col space-y-4">
             <div
               ref={addNavLinkRef}
               onClick={() => handleNavClick("/works", true)}
-              className={`nav-link text-4xl md:text-6xl lg:text-7xl font-mono tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/works" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
+              className={`nav-link text-4xl md:text-6xl lg:text-7xl ${navLinkClassName} tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/works" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
               style={{
                 color:
                   location.pathname === "/works"
@@ -482,12 +502,12 @@ const Header = memo(function Header({ onNavigate }) {
                     : "var(--muted)",
               }}
             >
-              Works
+              {t("nav.works")}
             </div>
             <div
               ref={addNavLinkRef}
               onClick={() => handleNavClick("/about", true)}
-              className={`nav-link text-4xl md:text-6xl lg:text-7xl font-mono tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/about" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
+              className={`nav-link text-4xl md:text-6xl lg:text-7xl ${navLinkClassName} tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/about" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
               style={{
                 color:
                   location.pathname === "/about"
@@ -495,12 +515,12 @@ const Header = memo(function Header({ onNavigate }) {
                     : "var(--muted)",
               }}
             >
-              About
+              {t("nav.about")}
             </div>
             <div
               ref={addNavLinkRef}
               onClick={() => handleNavClick("/contact", true)}
-              className={`nav-link text-4xl md:text-6xl lg:text-7xl font-mono tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/contact" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
+              className={`nav-link text-4xl md:text-6xl lg:text-7xl ${navLinkClassName} tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/contact" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
               style={{
                 color:
                   location.pathname === "/contact"
@@ -508,12 +528,12 @@ const Header = memo(function Header({ onNavigate }) {
                     : "var(--muted)",
               }}
             >
-              Contact
+              {t("nav.contact")}
             </div>
             <div
               ref={addNavLinkRef}
               onClick={() => handleNavClick("/links", true)}
-              className={`nav-link text-4xl md:text-6xl lg:text-7xl font-mono tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/links" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
+              className={`nav-link text-4xl md:text-6xl lg:text-7xl ${navLinkClassName} tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/links" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
               style={{
                 color:
                   location.pathname === "/links"
@@ -521,12 +541,12 @@ const Header = memo(function Header({ onNavigate }) {
                     : "var(--muted)",
               }}
             >
-              Connection
+              {t("nav.links")}
             </div>
             <div
               ref={addNavLinkRef}
               onClick={() => handleNavClick("/photos", true)}
-              className={`nav-link text-4xl md:text-6xl lg:text-7xl font-mono tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/photos" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
+              className={`nav-link text-4xl md:text-6xl lg:text-7xl ${navLinkClassName} tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/photos" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
               style={{
                 color:
                   location.pathname === "/photos"
@@ -534,7 +554,7 @@ const Header = memo(function Header({ onNavigate }) {
                     : "var(--muted)",
               }}
             >
-              Photos
+              {t("nav.photos")}
             </div>
           </nav>
 
@@ -543,13 +563,13 @@ const Header = memo(function Header({ onNavigate }) {
               className="font-mono text-[9px] tracking-[0.3em] no-select"
               style={{ color: "var(--muted)" }}
             >
-              Established 2026
+              {t("common.established")} 2026
             </span>
             <span
               className="font-mono text-[9px] tracking-[0.3em] no-select"
               style={{ color: "var(--muted)" }}
             >
-              ©2026 SOM_WHY. All Rights Reserved.
+              ©2026 SOM_WHY. {t("common.rightsReserved")}
             </span>
           </div>
         </div>

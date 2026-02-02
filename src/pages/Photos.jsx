@@ -3,10 +3,12 @@ import { ImageCard } from "../components"
 import { Masonry } from "@somwhy/react-masonry-layout"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useTranslation } from "react-i18next"
 
 gsap.registerPlugin(ScrollTrigger)
 
 const Photos = memo(function Photos() {
+  const { t } = useTranslation("photos")
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -207,10 +209,10 @@ const Photos = memo(function Photos() {
     <div className="px-6 md:px-12">
       <div className="mb-16">
         <h2 className="font-mono text-[10px] tracking-[0.6em] text-zinc-500 uppercase mb-4">
-          Visual Archives
+          {t("section")}
         </h2>
         <h1 className="text-4xl md:text-6xl font-light tracking-tighter">
-          PHOTOS.
+          {t("title")}
         </h1>
       </div>
 
@@ -220,7 +222,7 @@ const Photos = memo(function Photos() {
             <div key={index} className="mb-4">
               <ImageCard
                 image={image.src}
-                alt={image.name || "No name"}
+                alt={image.name || t("noName")}
                 width={image.width}
                 height={image.height}
                 loading={index < 3 ? "eager" : "lazy"}
@@ -230,7 +232,7 @@ const Photos = memo(function Photos() {
               >
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-t from-black to-transparent">
                   <p className=" font-mono text-[8px] tracking-[0.2em] text-white">
-                    REF. {image.date || "2026-01-29"}
+                    {t("ref")} {image.date || "2026-01-29"}
                   </p>
                   <p className="font-mono text-[10px] text-white uppercase">
                     {image.name}

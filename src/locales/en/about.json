@@ -1,0 +1,24 @@
+{
+  "section": "The Profile",
+  "title": "ABOUT",
+  "intro": "I'm SOM_WHY, crafting warm, quiet worlds from sound—where organic textures meet clinical precision, exploring biological growth versus synthetic decay.",
+  "manifesto": {
+    "title": "Creative Manifesto",
+    "content": "“I find music in the gaps between silence. Every frequency is a sprout, every distortion is a storm. We don't compose; we cultivate soundscapes until they breathe on their own.”" 
+  },
+  "disciplines": {
+    "title": "Disciplines",
+    "soundDesign": "Sound Design",
+    "granularSynthesis": "Granular Synthesis",
+    "fieldRecording": "Field Recording",
+    "mixing": "Mixing"
+  },
+  "audioDNA": {
+    "title": "Audio DNA",
+    "content": "House / Ambient / Botanica / Post Rock"
+  },
+  "serialNo": {
+    "label": "SERIAL NO.",
+    "value": "BTNC_772"
+  }
+}

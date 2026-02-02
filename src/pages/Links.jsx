@@ -1,8 +1,10 @@
 import React, { memo, useRef, useEffect, useMemo } from "react"
 import { ArrowUpRight } from "lucide-react"
 import gsap from "gsap"
+import { useTranslation } from "react-i18next"
 
 const Links = memo(function Links() {
+  const { t } = useTranslation("links")
   const containerRef = useRef(null)
   const imagePreviewRef = useRef(null)
   const linkRefs = useRef([])
@@ -135,12 +137,12 @@ const Links = memo(function Links() {
       <header className="mb-16 text-center">
         <h1
           className="glitch-text font-mono text-3xl md:text-5xl uppercase mb-4 no-select"
-          data-text="CONNECTION"
+          data-text={t("title")}
         >
-          CONNECTION
+          {t("title")}
         </h1>
         <p className="font-mono text-[10px] tracking-[0.4em] text-zinc-500 uppercase font-light">
-          Digital Frequency Access
+          {t("subtitle")}
         </p>
       </header>
 
@@ -169,7 +171,7 @@ const Links = memo(function Links() {
               <path d="M12 6v6l4 2"></path>
             </svg>
             <span className="font-mono text-sm tracking-[0.2em] uppercase">
-              GitHub
+              {t("github")}
             </span>
           </div>
           <ArrowUpRight className="text-zinc-600" />
@@ -199,7 +201,7 @@ const Links = memo(function Links() {
               <path d="m7 10 3 3-3 3"></path>
             </svg>
             <span className="font-mono text-sm tracking-[0.2em] uppercase">
-              NetEase Cloud Music
+              {t("netease")}
             </span>
           </div>
           <ArrowUpRight className="text-zinc-600" />
@@ -229,7 +231,7 @@ const Links = memo(function Links() {
               <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
             </svg>
             <span className="font-mono text-sm tracking-[0.2em] uppercase">
-              Bilibili
+              {t("bilibili")}
             </span>
           </div>
           <ArrowUpRight className="text-zinc-600" />
@@ -257,7 +259,7 @@ const Links = memo(function Links() {
               <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
             </svg>
             <span className="font-mono text-sm tracking-[0.2em] uppercase">
-              Loopspace
+              {t("loopspace")}
             </span>
           </div>
           <ArrowUpRight className="text-zinc-600" />
@@ -286,7 +288,7 @@ const Links = memo(function Links() {
               <path d="m10 15 5-3-5-3z"></path>
             </svg>
             <span className="font-mono text-sm tracking-[0.2em] uppercase">
-              YouTube
+              {t("youtube")}
             </span>
           </div>
           <ArrowUpRight className="text-zinc-600" />

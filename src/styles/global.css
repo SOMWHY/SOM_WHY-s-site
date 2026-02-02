@@ -1,5 +1,5 @@
 /* Global Styles */
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Space+Grotesk:wght@300;400;700&family=Azeret+Mono:wght@100;200;300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Space+Grotesk:wght@300;400;700&family=Azeret+Mono:wght@100;200;300;400&family=Noto+Sans+SC:wght@300;400;700&family=Noto+Sans+Mono+SC:wght@100;200;300;400&display=swap");
 
 :root {
   --bg: #f8f8f8;
@@ -19,7 +19,9 @@
 }
 
 body {
-  font-family: "Space Grotesk", sans-serif;
+  font-family:
+    "Space Grotesk", "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
+    "Heiti SC", "SimHei", sans-serif;
   background-color: var(--bg);
   color: var(--text);
   overflow-x: hidden;
@@ -33,7 +35,20 @@ body {
 }
 
 .font-mono {
-  font-family: "Azeret Mono", monospace;
+  font-family: "Azeret Mono", "Noto Sans Mono SC", "SF Mono", "Monaco", "Inconsolata", monospace;
+}
+
+.font-mono-zh {
+  font-family: "Noto Sans Mono SC", "Azeret Mono", "SF Mono", "Monaco", "Inconsolata", monospace;
+  letter-spacing: 0.1em;
+}
+
+html[lang="zh"] body {
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Heiti SC", "SimHei", "Space Grotesk", sans-serif;
+}
+
+.glitch-text-zh {
+  letter-spacing: 0.2em;
 }
 
 .no-select {
