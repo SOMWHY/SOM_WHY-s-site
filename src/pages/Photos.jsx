@@ -59,147 +59,147 @@ const Photos = memo(function Photos() {
     {
       src: "/assets/null-1b04beaeed90173e.webp",
       date: "2026-01-29",
-      name: "FL Chan",
+      key: "fl_chan",
       width: 1024,
       height: 768,
     },
     {
       src: "/assets/null-2eafa050439c7635.webp",
       date: "2026-01-29",
-      name: "Am I Cute?",
+      key: "am_i_cute",
       width: 800,
       height: 1024,
     },
     {
       src: "/assets/null-6b1b4065f588152f.webp",
       date: "2026-01-29",
-      name: "Lying on the Grass",
+      key: "lying_on_the_grass",
       width: 1024,
       height: 1024,
     },
     {
       src: "/assets/null-6c0259fdb4e6a418.webp",
       date: "2025-11-21",
-      name: "Shining leaves",
+      key: "shining_leaves",
       width: 1200,
       height: 800,
     },
     {
       src: "/assets/null-10eb6585e10f2207.webp",
       date: "2026-01-29",
-      name: "Cat or orange?",
+      key: "cat_or_orange",
       width: 900,
       height: 1200,
     },
     {
       src: "/assets/null-26dec620bdbd4947.webp",
       date: "2024-07-10",
-      name: "golden Sunrise",
+      key: "golden_sunrise",
       width: 1024,
       height: 768,
     },
     {
       src: "/assets/null-33cb9df3bbc0c458.webp",
       date: "2025-01-29",
-      name: "beneth the flowers",
+      key: "beneth_the_flowers",
       width: 800,
       height: 1024,
     },
     {
       src: "/assets/null-51e34fc69a518a71.webp",
       date: "2026-01-29",
-      name: "Bocchi the Porter",
+      key: "bocchi_the_porter",
       width: 1024,
       height: 1024,
     },
     {
       src: "/assets/null-f5a331fdbf5053e.webp",
       date: "2025-01-29",
-      name: "Flourish",
+      key: "flourish",
       width: 1200,
       height: 800,
     },
     {
       src: "/assets/null2bb22a3bf55a40eb.webp",
       date: "2025-11-08",
-      name: "Nostalgia",
+      key: "nostalgia",
       width: 900,
       height: 1200,
     },
     {
       src: "/assets/null2cfea00e747f76f.webp",
       date: "2025-11-08",
-      name: "Sky in the mirror",
+      key: "sky_in_the_mirror",
       width: 1024,
       height: 768,
     },
     {
       src: "/assets/null2f413a18423e2f56.webp",
       date: "2025-07-17",
-      name: "little cat and big chair",
+      key: "little_cat_and_big_chair",
       width: 800,
       height: 1024,
     },
     {
       src: "/assets/null2fcb6271cd5da46b.webp",
       date: "2025-10-07",
-      name: "Soft cloud",
+      key: "soft_cloud",
       width: 1024,
       height: 1024,
     },
     {
       src: "/assets/null5c3f45981a94e52f.webp",
       date: "2026-01-29",
-      name: "Walking alone",
+      key: "walking_alone",
       width: 1200,
       height: 800,
     },
     {
       src: "/assets/null9bef06dffebdf12.webp",
       date: "2025-01-27",
-      name: "Carpeted with flowers",
+      key: "carpeted_with_flowers",
       width: 900,
       height: 1200,
     },
     {
       src: "/assets/null36a0c8415048e93d.webp",
       date: "2025-01-29",
-      name: "A blaze of colour",
+      key: "a_blaze_of_colour",
       width: 1024,
       height: 768,
     },
     {
       src: "/assets/null61ad2acbea908c1c.webp",
       date: "2025-02-13",
-      name: "Stare into the distance",
+      key: "stare_into_the_distance",
       width: 800,
       height: 1024,
     },
     {
       src: "/assets/null173dd80a2b528fe6.webp",
       date: "2025-11-21",
-      name: "Playground in campus",
+      key: "playground_in_campus",
       width: 1024,
       height: 1024,
     },
     {
       src: "/assets/null547b4855305b3b08.webp",
       date: "2025-01-29",
-      name: "splay out",
+      key: "splay_out",
       width: 1200,
       height: 800,
     },
     {
       src: "/assets/null57534381b9ebe35a.webp",
       date: "2025-01-29",
-      name: "a mass of blooms",
+      key: "a_mass_of_blooms",
       width: 900,
       height: 1200,
     },
     {
       src: "/assets/null795854498ad0dbf6.webp",
       date: "2026-01-29",
-      name: "It's spring here",
+      key: "its_spring_here",
       width: 1024,
       height: 768,
     },
@@ -222,7 +222,7 @@ const Photos = memo(function Photos() {
             <div key={index} className="mb-4">
               <ImageCard
                 image={image.src}
-                alt={image.name || t("noName")}
+                alt={t(image.key) || t("noName")}
                 width={image.width}
                 height={image.height}
                 loading={index < 3 ? "eager" : "lazy"}
@@ -235,7 +235,7 @@ const Photos = memo(function Photos() {
                     {t("ref")} {image.date || "2026-01-29"}
                   </p>
                   <p className="font-mono text-[10px] text-white uppercase">
-                    {image.name}
+                    {t(image.key)}
                   </p>
                 </div>
               </ImageCard>
