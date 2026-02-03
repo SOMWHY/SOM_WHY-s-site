@@ -10,6 +10,7 @@ const About = lazy(() => import("../pages/About"))
 const Contact = lazy(() => import("../pages/Contact"))
 const Links = lazy(() => import("../pages/Links"))
 const Photos = lazy(() => import("../pages/Photos"))
+const NotFound = lazy(() => import("../pages/NotFound"))
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,14 @@ const router = createBrowserRouter([
         element: (
           <LazyWrapper>
             <Photos />
+          </LazyWrapper>
+        ),
+      },
+      {
+        path: "*",
+        element: (
+          <LazyWrapper>
+            <NotFound />
           </LazyWrapper>
         ),
       },

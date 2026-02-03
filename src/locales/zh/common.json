@@ -17,5 +17,11 @@
     "rightsReserved": "All Rights Reserved",
     "transmissionActive": "Transmission Active",
     "visualFrequency": "Visual Frequency Established"
+  },
+  "404": {
+    "title": "404",
+    "subtitle": "页面未找到",
+    "description": "您访问的页面不存在或已被移除。",
+    "back_to_home": "返回首页"
   }
 }

@@ -17,5 +17,11 @@
     "rightsReserved": "All Rights Reserved",
     "transmissionActive": "Transmission Active",
     "visualFrequency": "Visual Frequency Established"
+  },
+  "404": {
+    "title": "404",
+    "subtitle": "PAGE NOT FOUND",
+    "description": "The page you are looking for doesn't exist or has been removed.",
+    "back_to_home": "Back to Home"
   }
 }
