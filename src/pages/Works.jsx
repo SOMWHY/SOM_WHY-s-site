@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useRef, useMemo } from "react"
+import React, { memo, useEffect, useRef, useMemo } from "react"
 import { ArrowUpRight } from "lucide-react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -10,8 +10,46 @@ gsap.registerPlugin(ScrollTrigger)
 const Works = memo(function Works() {
   const { t } = useTranslation("works")
   const containerRef = useRef(null)
-  const [songs, setSongs] = useState([])
-  const [loading, setLoading] = useState(true)
+
+  // Use useMemo to avoid recreating the songs array on every render
+  const songs = useMemo(
+    () => [
+      {
+        id: "2709096230",
+        name: "listen_to_the_wind",
+        al: { name: "something_warm_and_bright" },
+      },
+      {
+        id: "2709096282",
+        name: "float_up_to_the_sky",
+        al: { name: "something_warm_and_bright" },
+      },
+      {
+        id: "2709096289",
+        name: "walk_in_the_clouds",
+        al: { name: "something_warm_and_bright" },
+      },
+      {
+        id: "2709096290",
+        name: "I_want_to_escape",
+        al: { name: "something_warm_and_bright" },
+      },
+      {
+        id: "2709095328",
+        name: "finally_we_got_here",
+        al: { name: "something_warm_and_bright" },
+      },
+      {
+        id: "2709096291",
+        name: "long_way_home",
+        al: { name: "something_warm_and_bright" },
+      },
+    ],
+    [],
+  )
+
+  // Directly set loading as constant
+  const loading = false
 
   const sectionText = t("section")
   const titleText = t("title")
@@ -34,41 +72,6 @@ const Works = memo(function Works() {
     () => (containsChinese(noSongsText) ? "font-mono-zh" : "font-mono"),
     [noSongsText],
   )
-
-  useEffect(() => {
-    const fetchSongs = async () => {
-      try {
-        console.log("Starting to fetch songs...")
-        const response = await fetch(
-          "http://localhost:3000/album?id=273210458",
-          {
-            mode: "cors",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          },
-        )
-        console.log("Response received:", response)
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        const data = await response.json()
-        console.log("Data received:", data)
-        if (data.songs) {
-          setSongs(data.songs)
-        } else {
-          console.error("No songs found in response")
-        }
-      } catch (error) {
-        console.error("Failed to fetch songs:", error)
-      } finally {
-        console.log("Fetch completed, setting loading to false")
-        setLoading(false)
-      }
-    }
-
-    fetchSongs()
-  }, [])
 
   useEffect(() => {
     const container = containerRef.current
