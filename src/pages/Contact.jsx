@@ -1,6 +1,7 @@
-import React, { memo } from "react"
+import React, { memo, useState, useEffect } from "react"
 import { ArrowRight } from "lucide-react"
-import contactImage from "../assets/屏幕截图 2026-01-29 214427.webp"
+import musicGirlLight from "../assets/music_girl_light.webp"
+import musicGirlDark from "../assets/music_girl_dark.webp"
 import { ImageCard } from "../components"
 import { useTranslation } from "react-i18next"
 import useLocaleStore from "../store/localeStore"
@@ -8,7 +9,33 @@ import useLocaleStore from "../store/localeStore"
 const Contact = memo(function Contact() {
   const { t } = useTranslation(["contact", "common"])
   const { locale } = useLocaleStore()
+  const [isDarkMode, setIsDarkMode] = useState(false)
   const isChinese = locale === "zh"
+
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains("dark"))
+    }
+
+    checkDarkMode()
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          checkDarkMode()
+        }
+      })
+    })
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
+  const contactImage = isDarkMode ? musicGirlDark : musicGirlLight
 
   return (
     <div
@@ -42,12 +69,18 @@ const Contact = memo(function Contact() {
           aspectRatio="aspect-[4/3]"
           className="cursor-crosshair"
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div
+            className={`absolute inset-0 bg-gradient-to-t ${isDarkMode ? "from-black/60" : "from-black/40"} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+          ></div>
           <div className="absolute bottom-0 left-0 p-6 w-full transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-            <p className="font-mono text-[8px] tracking-[0.3em] text-white/60 uppercase mb-2">
+            <p
+              className={`font-mono text-[8px] tracking-[0.3em] uppercase mb-2 ${isDarkMode ? "text-white/60" : "text-black/60"}`}
+            >
               {t("common.transmissionActive")}
             </p>
-            <p className="font-mono text-[10px] text-white uppercase tracking-wider">
+            <p
+              className={`font-mono text-[10px] uppercase tracking-wider ${isDarkMode ? "text-white" : "text-black"}`}
+            >
               {t("common.visualFrequency")}
             </p>
           </div>

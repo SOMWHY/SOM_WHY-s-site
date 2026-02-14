@@ -74,8 +74,14 @@ const NotFound = memo(function NotFound() {
         {/* Decorative Elements */}
         <div className="mt-16 flex space-x-4 opacity-60">
           <div className="w-1 h-1 bg-black dark:bg-white rounded-full animate-pulse"></div>
-          <div className="w-1 h-1 bg-black dark:bg-white rounded-full animate-pulse" style={{ animationDelay: "0.2s" }}></div>
-          <div className="w-1 h-1 bg-black dark:bg-white rounded-full animate-pulse" style={{ animationDelay: "0.4s" }}></div>
+          <div
+            className="w-1 h-1 bg-black dark:bg-white rounded-full animate-pulse"
+            style={{ animationDelay: "0.2s" }}
+          ></div>
+          <div
+            className="w-1 h-1 bg-black dark:bg-white rounded-full animate-pulse"
+            style={{ animationDelay: "0.4s" }}
+          ></div>
         </div>
       </div>
     </div>
