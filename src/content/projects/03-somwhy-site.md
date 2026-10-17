@@ -4,7 +4,7 @@ title_zh: 索姆歪的小站
 summary: A bilingual personal site for photography, music and writing — rebuilt around an offline-first asset pipeline so it loads fast on a bad connection.
 summary_zh: 一个承载摄影、音乐与写作的双语个人站点，围绕「离线优先」的资源管线重建，弱网下也能快速打开。
 role: Solo developer & designer
-period: 2025.11 — 2026.10
+period: "2026.02 — 2026.10"
 stack:
   - Vite
   - React 19

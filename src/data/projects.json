@@ -1,10 +1,60 @@
 [
   {
+    "slug": "lineform-see-the-music",
+    "title": "Lineform",
+    "summary": "An immersive 3D music visualizer: pick a track in the sidebar and the canvas reacts to the audio in real time.",
+    "role": "Solo developer",
+    "period": "2025.09",
+    "stack": [
+      "JavaScript",
+      "React",
+      "Three.js",
+      "React Three Fiber",
+      "react-three-drei",
+      "WaveSurfer.js",
+      "Zustand",
+      "Leva"
+    ],
+    "repo": "https://github.com/SOMWHY/Lineform-See-the-music",
+    "demo": "https://lineform-see-the-music.netlify.app/",
+    "cover": null,
+    "title_zh": "Lineform 音乐可视化",
+    "title_en": null,
+    "summary_zh": "沉浸式 3D 音乐可视化站点：在侧边栏选一首歌，画布随音频实时变化。",
+    "summary_en": null,
+    "readingMinutes": 2
+  },
+  {
+    "slug": "rag",
+    "title": "RAG",
+    "summary": "A document Q&A and knowledge management app built on retrieval-augmented generation: upload PDF or Markdown, ask in natural language, and get streamed answers with citations.",
+    "role": "Solo developer",
+    "period": "2026.10",
+    "stack": [
+      "TypeScript",
+      "Next.js 16",
+      "React 19",
+      "Tailwind CSS",
+      "Vercel AI SDK",
+      "Neon Postgres",
+      "pgvector",
+      "Drizzle ORM"
+    ],
+    "repo": "https://github.com/SOMWHY/RAG-",
+    "demo": "https://rag-iota-six.vercel.app",
+    "cover": null,
+    "title_zh": "RAG 知识助手",
+    "title_en": null,
+    "summary_zh": "基于检索增强生成（RAG）的文档问答与知识管理应用：上传 PDF / Markdown，用自然语言提问，AI 基于检索片段流式作答并附来源引用。",
+    "summary_en": null,
+    "readingMinutes": 3
+  },
+  {
     "slug": "somwhy-site",
     "title": "SOM_WHY's Site",
     "summary": "A bilingual personal site for photography, music and writing — rebuilt around an offline-first asset pipeline so it loads fast on a bad connection.",
     "role": "Solo developer & designer",
-    "period": "2025.11 — 2026.10",
+    "period": "2026.02 — 2026.10",
     "stack": [
       "Vite",
       "React 19",
@@ -25,25 +75,43 @@
     "readingMinutes": 3
   },
   {
-    "slug": "loopspace-radio",
-    "title": "Loopspace Radio",
-    "summary": "An always-on ambient radio for my own releases — a continuous stream with a schedule, built to stay in sync across tabs and survive a dropped connection.",
-    "role": "Frontend & interaction design",
-    "period": "2026.03 — 2026.08",
+    "slug": "clipgif",
+    "title": "clipGIF",
+    "summary": "Turn video segments into GIFs with a visual timeline. Self-hosted, FastAPI + yt-dlp + ffmpeg, pluggable for more platforms.",
+    "role": "Solo developer",
+    "period": "2026.10",
     "stack": [
-      "React",
-      "Web Audio API",
-      "Zustand",
-      "Service Worker",
-      "Vite"
+      "Python",
+      "FastAPI",
+      "yt-dlp",
+      "FFmpeg"
     ],
-    "repo": null,
-    "demo": "https://somwhy.loopspace.club",
+    "repo": "https://github.com/SOMWHY/clipGIF",
+    "demo": null,
     "cover": null,
-    "title_zh": "Loopspace 电台",
+    "title_zh": "clipGIF",
     "title_en": null,
-    "summary_zh": "一个常驻的环境音乐电台，按节目单连续播放，跨标签页保持同步，断线后能自行恢复。",
+    "summary_zh": "把视频片段转成 GIF，带可视化时间轴。本地自部署，FastAPI + yt-dlp + ffmpeg，可扩展支持更多平台。",
     "summary_en": null,
     "readingMinutes": 2
+  },
+  {
+    "slug": "react-masonry-layout",
+    "title": "react-masonry-layout",
+    "summary": "A flexible masonry layout component for React, with built-in image loading states and layouts that adapt to the container rather than the viewport.",
+    "role": "Solo developer",
+    "period": "2025.09",
+    "stack": [
+      "TypeScript",
+      "React"
+    ],
+    "repo": "https://github.com/SOMWHY/react-masonry-layout",
+    "demo": null,
+    "cover": null,
+    "title_zh": "react-masonry-layout",
+    "title_en": null,
+    "summary_zh": "一个灵活的 React 瀑布流布局组件：内置图片加载与错误处理，布局随容器尺寸自适应。",
+    "summary_en": null,
+    "readingMinutes": 1
   }
 ]
