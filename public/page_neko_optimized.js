@@ -518,14 +518,11 @@ const catState = new CatStateMachine()
 function startDrag(e) {
   if (catState.state !== STATE.SLEEPING) return
 
-  // Prevent default selection behavior
-  e.preventDefault()
-
-  // Add temporary style to disable selection
-  const style = document.createElement("style")
-  style.id = "no-select-style"
-  style.textContent = "* { user-select: none !important; }"
-  document.head.appendChild(style)
+  // 这里刻意不调用 e.preventDefault()：
+  // 在睡着的猫附近按下鼠标时，它会一并阻止输入框聚焦与选区起始，
+  // 属于干扰页面正常操作。拖拽期间禁止选中改用 body 级 userSelect ——
+  // user-select 可继承，效果等价，且不再往 head 注入全局 !important 样式。
+  document.body.style.userSelect = "none"
 
   isDragging = true
   dragStartX = e.clientX
@@ -565,22 +562,23 @@ function drag(e) {
   updateCursor()
 }
 
-function endDrag() {
+function endDrag(e) {
   if (!isDragging) return
 
-  // Remove temporary no-select style
-  const style = document.getElementById("no-select-style")
-  if (style) {
-    style.parentNode.removeChild(style)
-  }
+  // 恢复文本选择（拖拽期间被禁用）
+  document.body.style.userSelect = ""
 
   isDragging = false
   document.removeEventListener("mousemove", drag)
   document.removeEventListener("mouseup", endDrag)
 
   if (dragStartEvent) {
-    const dx = Math.abs(dragStartEvent.clientX - dragStartEvent.clientX)
-    const dy = Math.abs(dragStartEvent.clientY - dragStartEvent.clientY)
+    // 原先写成 dragStartEvent.clientX - dragStartEvent.clientX，自比较恒为 0，
+    // 于是任何一次拖拽松手都会走进下面的「视为点击」分支去唤醒猫 ——
+    // 「把睡着的猫拖走」这个行为其实一直没能生效。
+    // 改为与真正松手时的坐标比较。
+    const dx = Math.abs((e?.clientX ?? dragStartEvent.clientX) - dragStartX)
+    const dy = Math.abs((e?.clientY ?? dragStartEvent.clientY) - dragStartY)
 
     if (dx <= PHYSICS.DRAG_THRESHOLD && dy <= PHYSICS.DRAG_THRESHOLD) {
       catState.handleMouseClick(dragStartEvent)
@@ -631,16 +629,43 @@ function calculateDirection(dx, dy) {
   return DIRECTION.DOWN
 }
 
+function isPointerOverCat() {
+  return (
+    lastMouseX >= petX &&
+    lastMouseX <= petX + PET_WIDTH &&
+    lastMouseY >= petY &&
+    lastMouseY <= petY + PET_HEIGHT
+  )
+}
+
+/**
+ * 光标只在真正有意义时才接管：睡着的猫上方给 grab、拖拽中给 grabbing。
+ * 其余一律写空串，等于移除内联样式，把光标形态交还给页面自身的 CSS。
+ *
+ * 两条硬性约束：
+ * 1. 绝不能写 "none" —— 那会让整个页面的光标消失。
+ *    猫进入 IDLE 的条件正是「追上了静止的光标」，
+ *    也就是用户停下鼠标准备点击的那一刻，恰好最需要看到光标。
+ * 2. 不能写 "auto" —— 内联样式优先级高于类，
+ *    会盖掉页面上 Tailwind 的 cursor-pointer / cursor-text。
+ */
+let appliedCursor = null
+
+function setBodyCursor(value) {
+  // updatePetAppearance 每帧都会走到 updateCursor，值没变就直接返回，
+  // 否则每帧都要触发一次全文档的样式重算。
+  if (appliedCursor === value) return
+  appliedCursor = value
+  document.body.style.cursor = value
+}
+
 function updateCursor() {
-  if (catState.state === STATE.IDLE) {
-    document.body.style.cursor = "none"
-  } else if (isDragging) {
-    document.body.style.cursor = "grabbing"
-  } else if (catState.state === STATE.SLEEPING) {
-    const isOverCat = lastMouseX >= petX && lastMouseX <= petX + PET_WIDTH && lastMouseY >= petY && lastMouseY <= petY + PET_HEIGHT
-    document.body.style.cursor = isOverCat ? "grab" : "auto"
+  if (isDragging) {
+    setBodyCursor("grabbing")
+  } else if (catState.state === STATE.SLEEPING && isPointerOverCat()) {
+    setBodyCursor("grab")
   } else {
-    document.body.style.cursor = "auto"
+    setBodyCursor("")
   }
 }
 

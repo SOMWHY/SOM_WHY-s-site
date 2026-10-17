@@ -1,0 +1,24 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# 注意：Netlify 多条 headers 规则命中同一路径时，越靠后优先级越高，
+# 因此这里必须先放通配规则，再用更具体的路径覆盖它。
+
+# 默认：HTML 入口必须每次回源校验，否则部署后用户拿到旧的资源引用清单
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Vite 产物文件名自带内容哈希，内容变则文件名变，可以安全设为 immutable
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# 音频由 scripts/encode-audio.mjs 产出，文件名里带了内容哈希，同样可长缓存
+[[headers]]
+  for = "/assets/audio/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

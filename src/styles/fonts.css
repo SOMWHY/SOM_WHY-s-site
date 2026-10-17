@@ -1,0 +1,53 @@
+/* 自托管字体
+ *
+ * 说明：此前这里是一行 @import url("https://fonts.googleapis.com/css2?...")，
+ * 它会被原样打进产物 CSS 首行，形成  HTML → CSS → @import CSS → 字体文件  的串行阻塞链，
+ * 且其中的 Noto Sans SC / Noto Sans Mono SC 中文字体需要跨域到 Google，线上极度不稳。
+ *
+ * 现在改为：拉丁字体走 @fontsource（已按 unicode-range 切好 latin 子集），
+ * 中文字体走 scripts/subset-fonts.mjs 按站内真实字符集裁切（单权重 ~80KB，且可被 Vite 做内容哈希）。
+ */
+
+/* ---- 拉丁 / 显示字体 ---- */
+/* 由 src/main.jsx 以 JS import 引入 @fontsource 的 latin 子集 CSS */
+
+/* ---- 中文字体：Noto Sans SC 子集（由 npm run fonts:build 生成） ---- */
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("../assets/fonts/NotoSansSC-subset-100.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../assets/fonts/NotoSansSC-subset-300.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/NotoSansSC-subset-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/NotoSansSC-subset-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/NotoSansSC-subset-700.woff2") format("woff2");
+}

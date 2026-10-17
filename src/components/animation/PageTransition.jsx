@@ -12,6 +12,28 @@ const PageTransition = ({
   const animationRef = useRef(null)
   const noiseAnimationRef = useRef(null)
 
+  /**
+   * 两个回调必须由 ref 持有，绝不能直接放进 createAnimation 的依赖数组。
+   *
+   * onAnimationProgress 会在时间线 0.7s 处触发路由导航，而它自身的依赖
+   * （Layout 里的 nextPath / shouldNavigate）会因为这次 setState 而变化，
+   * 于是回调引用一变 → createAnimation 引用跟着变 → 主 useEffect 重新执行：
+   * 先 kill 掉正在跑的时间线，再新建一条；而新时间线的首段是
+   * fromTo(container, { opacity: 0 }, ...)，immediateRender 会立刻把遮罩
+   * 置为透明 —— 页面就在动画中途被漏出来，闪一下。
+   *
+   * 用 ref 持有即可切断「父组件重渲染 → 引用变化 → 重建时间线」这条链，
+   * 时间线得以从淡入连续播到淡出，全程以 opacity 1 盖住路由切换。
+   */
+  const progressRef = useRef(onAnimationProgress)
+  const completeRef = useRef(onAnimationComplete)
+
+  // 刻意不写依赖数组：每次渲染后同步最新引用（避免在 render 阶段直接写 ref）
+  useEffect(() => {
+    progressRef.current = onAnimationProgress
+    completeRef.current = onAnimationComplete
+  })
+
   // 生成噪点
   const generateNoise = useCallback(() => {
     const canvas = canvasRef.current
@@ -52,6 +74,7 @@ const PageTransition = ({
   }, [])
 
   // 创建GSAP动画
+  // 依赖数组只保留 stopNoiseAnimation（引用稳定），回调一律走 ref
   const createAnimation = useCallback(() => {
     if (animationRef.current) {
       animationRef.current.kill()
@@ -60,9 +83,7 @@ const PageTransition = ({
     const timeline = gsap.timeline({
       onComplete: () => {
         stopNoiseAnimation()
-        if (onAnimationComplete) {
-          onAnimationComplete()
-        }
+        completeRef.current?.()
       },
       onReverseComplete: () => {
         stopNoiseAnimation()
@@ -96,11 +117,9 @@ const PageTransition = ({
       0,
     )
 
-    // 在动画更早阶段触发路由切换
+    // 在动画更早阶段触发路由切换（此时遮罩仍是 opacity 1，全覆盖）
     timeline.add(() => {
-      if (onAnimationProgress) {
-        onAnimationProgress()
-      }
+      progressRef.current?.()
     }, "+=0.1")
 
     // 淡出阶段
@@ -114,9 +133,12 @@ const PageTransition = ({
     )
 
     animationRef.current = timeline
-  }, [onAnimationProgress, onAnimationComplete, stopNoiseAnimation])
+  }, [stopNoiseAnimation])
 
   // 初始化和清理
+  // 除 isActive 外，这里的依赖（animateNoise / createAnimation / stopNoiseAnimation）
+  // 引用都保持稳定，因此本 effect 只在 isActive 由 false→true 时执行一次，
+  // 时间线不会被父组件的重渲染打断重建。
   useEffect(() => {
     if (isActive) {
       animateNoise()

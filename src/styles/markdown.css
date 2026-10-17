@@ -1,0 +1,304 @@
+/**
+ * Markdown 正文排版
+ *
+ * 只随 MarkdownView（懒加载 chunk）一起加载，不进首屏样式。
+ * 沿用站点既有的 CSS 变量，深浅色主题自动跟随。
+ */
+
+.markdown-body {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  overflow-wrap: break-word;
+}
+
+.markdown-body > * + * {
+  margin-top: 1.15em;
+}
+
+/* ---------- 标题 ---------- */
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4 {
+  font-family: "Azeret Mono", "Noto Sans SC", monospace;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.markdown-body h1 {
+  font-size: 1.6rem;
+  margin-top: 2em;
+}
+
+.markdown-body h2 {
+  font-size: 1.3rem;
+  margin-top: 2.2em;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgb(127 127 127 / 0.22);
+}
+
+.markdown-body h3 {
+  font-size: 1.05rem;
+  margin-top: 1.8em;
+  color: var(--text);
+}
+
+.markdown-body h4 {
+  font-size: 0.95rem;
+  margin-top: 1.6em;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+/* ---------- 段落与强调 ---------- */
+
+.markdown-body p {
+  color: var(--text);
+}
+
+.markdown-body strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.markdown-body em {
+  font-style: italic;
+}
+
+.markdown-body a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.markdown-body a:hover {
+  color: var(--accent);
+}
+
+/* ---------- 列表 ---------- */
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1.4em;
+}
+
+.markdown-body ul {
+  list-style: none;
+}
+
+.markdown-body ul > li {
+  position: relative;
+}
+
+.markdown-body ul > li::before {
+  content: "";
+  position: absolute;
+  left: -1.1em;
+  top: 0.72em;
+  width: 5px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.markdown-body ol {
+  list-style: decimal;
+}
+
+.markdown-body ol > li::marker {
+  color: var(--muted);
+  font-family: "Azeret Mono", monospace;
+  font-size: 0.85em;
+}
+
+.markdown-body li + li {
+  margin-top: 0.4em;
+}
+
+/* ---------- 引用 ---------- */
+
+.markdown-body blockquote {
+  border-left: 2px solid var(--accent);
+  padding: 0.2em 0 0.2em 1.1em;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---------- 代码 ---------- */
+
+.markdown-body code {
+  font-family: "Azeret Mono", "SF Mono", monospace;
+  font-size: 0.85em;
+}
+
+.markdown-body :not(pre) > code {
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  background: rgb(127 127 127 / 0.16);
+  color: var(--text);
+}
+
+.markdown-body pre {
+  padding: 1.1em 1.2em;
+  border-radius: 6px;
+  border: 1px solid rgb(127 127 127 / 0.22);
+  background: rgb(127 127 127 / 0.1);
+  overflow-x: auto;
+  line-height: 1.7;
+}
+
+.markdown-body pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+
+/* ---------- 表格（remark-gfm） ---------- */
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid rgb(127 127 127 / 0.22);
+  padding: 0.55em 0.8em;
+  text-align: left;
+}
+
+.markdown-body th {
+  background: rgb(127 127 127 / 0.1);
+  font-family: "Azeret Mono", "Noto Sans SC", monospace;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ---------- 其他 ---------- */
+
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid rgb(127 127 127 / 0.22);
+  margin: 2.4em 0;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* ---------- 代码高亮（rehype-highlight / highlight.js token） ---------- */
+
+.markdown-body .hljs-comment,
+.markdown-body .hljs-quote {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.markdown-body .hljs-keyword,
+.markdown-body .hljs-selector-tag,
+.markdown-body .hljs-literal,
+.markdown-body .hljs-section,
+.markdown-body .hljs-doctag,
+.markdown-body .hljs-name {
+  color: #0b7a3c;
+}
+
+.markdown-body .hljs-string,
+.markdown-body .hljs-regexp,
+.markdown-body .hljs-addition,
+.markdown-body .hljs-attribute,
+.markdown-body .hljs-meta .hljs-string {
+  color: #0a6f8f;
+}
+
+.markdown-body .hljs-number,
+.markdown-body .hljs-symbol,
+.markdown-body .hljs-bullet,
+.markdown-body .hljs-link,
+.markdown-body .hljs-selector-attr,
+.markdown-body .hljs-selector-pseudo {
+  color: #9a5b00;
+}
+
+.markdown-body .hljs-title,
+.markdown-body .hljs-title.class_,
+.markdown-body .hljs-title.function_,
+.markdown-body .hljs-built_in,
+.markdown-body .hljs-type {
+  color: #6a3fb5;
+}
+
+.markdown-body .hljs-attr,
+.markdown-body .hljs-variable,
+.markdown-body .hljs-template-variable,
+.markdown-body .hljs-params {
+  color: #a13d6d;
+}
+
+.markdown-body .hljs-deletion {
+  color: #b3261e;
+}
+
+.markdown-body .hljs-emphasis {
+  font-style: italic;
+}
+
+.markdown-body .hljs-strong {
+  font-weight: 600;
+}
+
+/* 深色主题下把上面偏暗的色号换成亮色版本，保证对比度 */
+html.dark .markdown-body .hljs-keyword,
+html.dark .markdown-body .hljs-selector-tag,
+html.dark .markdown-body .hljs-literal,
+html.dark .markdown-body .hljs-section,
+html.dark .markdown-body .hljs-doctag,
+html.dark .markdown-body .hljs-name {
+  color: var(--accent);
+}
+
+html.dark .markdown-body .hljs-string,
+html.dark .markdown-body .hljs-regexp,
+html.dark .markdown-body .hljs-addition,
+html.dark .markdown-body .hljs-attribute {
+  color: #7fd8ff;
+}
+
+html.dark .markdown-body .hljs-number,
+html.dark .markdown-body .hljs-symbol,
+html.dark .markdown-body .hljs-bullet,
+html.dark .markdown-body .hljs-link {
+  color: #ffc46b;
+}
+
+html.dark .markdown-body .hljs-title,
+html.dark .markdown-body .hljs-title.class_,
+html.dark .markdown-body .hljs-title.function_,
+html.dark .markdown-body .hljs-built_in,
+html.dark .markdown-body .hljs-type {
+  color: #c8a6ff;
+}
+
+html.dark .markdown-body .hljs-attr,
+html.dark .markdown-body .hljs-variable,
+html.dark .markdown-body .hljs-template-variable,
+html.dark .markdown-body .hljs-params {
+  color: #ff9ec4;
+}
+
+html.dark .markdown-body .hljs-deletion {
+  color: #ff8a80;
+}

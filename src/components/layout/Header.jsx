@@ -24,7 +24,7 @@ const Header = memo(function Header({ onNavigate }) {
     const hasChinese = [
       t("nav.works"),
       t("nav.about"),
-      t("nav.contact"),
+      t("nav.blog"),
       t("nav.links"),
       t("nav.photos"),
     ].some((text) => containsChinese(text))
@@ -202,7 +202,7 @@ const Header = memo(function Header({ onNavigate }) {
     const linkTexts = {
       works: t("nav.works"),
       about: t("nav.about"),
-      contact: t("nav.contact"),
+      blog: t("nav.blog"),
       links: t("nav.links"),
       photos: t("nav.photos"),
     }
@@ -368,51 +368,53 @@ const Header = memo(function Header({ onNavigate }) {
         <div className="flex-1"></div>
 
         {/* Desktop Navigation - Centered */}
+        {/* 标签统一走 t("nav.*")：原先这里写死了英文，
+            导致桌面显示 "Links" 而移动遮罩显示 "Connection"（nav.links 的实际值） */}
         <nav className="hidden lg:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2">
           <div
             ref={(el) => {
               navLinkRefs.current.works = el
             }}
             onClick={() => handleNavClick("/works")}
-            className="font-mono text-[10px] tracking-[0.3em] uppercase transition-all text-zinc-500 hover:text-current dark:hover:text-current cursor-pointer"
+            className={`${navLinkClassName} text-[10px] tracking-[0.3em] uppercase transition-all text-zinc-500 hover:text-current dark:hover:text-current cursor-pointer`}
           >
-            Works
+            {t("nav.works")}
           </div>
           <div
             ref={(el) => {
               navLinkRefs.current.about = el
             }}
             onClick={() => handleNavClick("/about")}
-            className="font-mono text-[10px] tracking-[0.3em] uppercase transition-all text-zinc-500 hover:text-current dark:hover:text-current cursor-pointer"
+            className={`${navLinkClassName} text-[10px] tracking-[0.3em] uppercase transition-all text-zinc-500 hover:text-current dark:hover:text-current cursor-pointer`}
           >
-            About
+            {t("nav.about")}
           </div>
           <div
             ref={(el) => {
-              navLinkRefs.current.contact = el
+              navLinkRefs.current.blog = el
             }}
-            onClick={() => handleNavClick("/contact")}
-            className="font-mono text-[10px] tracking-[0.3em] uppercase transition-all text-zinc-500 hover:text-current dark:hover:text-current cursor-pointer"
+            onClick={() => handleNavClick("/blog")}
+            className={`${navLinkClassName} text-[10px] tracking-[0.3em] uppercase transition-all text-zinc-500 hover:text-current dark:hover:text-current cursor-pointer`}
           >
-            Contact
+            {t("nav.blog")}
           </div>
           <div
             ref={(el) => {
               navLinkRefs.current.links = el
             }}
             onClick={() => handleNavClick("/links")}
-            className="font-mono text-[10px] tracking-[0.3em] uppercase transition-all text-zinc-500 hover:text-current dark:hover:text-current cursor-pointer"
+            className={`${navLinkClassName} text-[10px] tracking-[0.3em] uppercase transition-all text-zinc-500 hover:text-current dark:hover:text-current cursor-pointer`}
           >
-            Links
+            {t("nav.links")}
           </div>
           <div
             ref={(el) => {
               navLinkRefs.current.photos = el
             }}
             onClick={() => handleNavClick("/photos")}
-            className="font-mono text-[10px] tracking-[0.3em] uppercase transition-all text-zinc-500 hover:text-current dark:hover:text-current cursor-pointer"
+            className={`${navLinkClassName} text-[10px] tracking-[0.3em] uppercase transition-all text-zinc-500 hover:text-current dark:hover:text-current cursor-pointer`}
           >
-            Photos
+            {t("nav.photos")}
           </div>
         </nav>
 
@@ -519,16 +521,16 @@ const Header = memo(function Header({ onNavigate }) {
             </div>
             <div
               ref={addNavLinkRef}
-              onClick={() => handleNavClick("/contact", true)}
-              className={`nav-link text-4xl md:text-6xl lg:text-7xl ${navLinkClassName} tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/contact" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
+              onClick={() => handleNavClick("/blog", true)}
+              className={`nav-link text-4xl md:text-6xl lg:text-7xl ${navLinkClassName} tracking-tighter hover:bg-pink-300 dark:hover:bg-rose-800/70 transition-all no-select cursor-pointer ${location.pathname === "/blog" ? "text-current opacity-100 ring-1 ring-black" : "hover:text-current"}`}
               style={{
                 color:
-                  location.pathname === "/contact"
+                  location.pathname === "/blog"
                     ? "var(--text)"
                     : "var(--muted)",
               }}
             >
-              {t("nav.contact")}
+              {t("nav.blog")}
             </div>
             <div
               ref={addNavLinkRef}

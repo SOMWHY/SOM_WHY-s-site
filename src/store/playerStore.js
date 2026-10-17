@@ -80,11 +80,30 @@ const usePlayerStore = create((set, get) => {
       set({ isLoading: true })
 
       try {
+        // 时长可读取的时机在不同播放模式下不完全一致，统一在这里兜住
+        const syncDuration = () => {
+          try {
+            const duration = howl.duration()
+            if (duration && duration > 0) targetSong.duration = duration
+          } catch {
+            // 元数据尚未到达，忽略即可
+          }
+        }
+
         // 创建新的 Howl 实例
         const howl = new Howl({
           src: [targetSong.audio],
+          // Web Audio 模式（默认）需要先整首下载再 decodeAudioData，7MB 的曲子在弱网下要等很久才出声。
+          // 切到 HTML5 Audio 后由浏览器通过 HTTP Range 边下边播，缓冲到足够就开始播放，
+          // 同时也省下整首 PCM 常驻内存的开销。
+          html5: true,
+          // 只预取元数据，真正的数据流等到点击播放时才拉
+          preload: "metadata",
+          format: ["mp3"],
           volume: state.isMuted ? 0 : state.volume,
           onplay: () => {
+            // html5 模式下 onload 的触发时机不如 Web Audio 稳定，播起来后再补一次时长
+            syncDuration()
             set({ isPlaying: true, isLoading: false })
             // 为每个Howl实例创建独立的定时器
             const interval = setInterval(() => {
@@ -126,8 +145,8 @@ const usePlayerStore = create((set, get) => {
             get().next()
           },
           onload: () => {
-            // 歌曲加载完成后更新时长
-            targetSong.duration = howl.duration()
+            // 元数据到达后即可拿到时长，不必等整首下载完
+            syncDuration()
           },
           onloaderror: (id, error) => {
             console.error("Error loading audio:", error)

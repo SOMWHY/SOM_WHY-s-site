@@ -1,13 +1,15 @@
 import { createBrowserRouter } from "react-router-dom"
 import React, { lazy } from "react"
 import Layout from "../components/layout/Layout"
-import { LazyWrapper } from "../components"
+import LazyWrapper from "../components/ui/LazyWrapper"
 
 // 使用 React.lazy 懒加载页面组件
 const Home = lazy(() => import("../pages/Home"))
 const Works = lazy(() => import("../pages/Works"))
+const ProjectDetail = lazy(() => import("../pages/ProjectDetail"))
 const About = lazy(() => import("../pages/About"))
-const Contact = lazy(() => import("../pages/Contact"))
+const Blog = lazy(() => import("../pages/Blog"))
+const PostDetail = lazy(() => import("../pages/PostDetail"))
 const Links = lazy(() => import("../pages/Links"))
 const Photos = lazy(() => import("../pages/Photos"))
 const NotFound = lazy(() => import("../pages/NotFound"))
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "works/:slug",
+        element: (
+          <LazyWrapper>
+            <ProjectDetail />
+          </LazyWrapper>
+        ),
+      },
+      {
         path: "about",
         element: (
           <LazyWrapper>
@@ -42,10 +52,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "contact",
+        path: "blog",
         element: (
           <LazyWrapper>
-            <Contact />
+            <Blog />
+          </LazyWrapper>
+        ),
+      },
+      {
+        path: "blog/:slug",
+        element: (
+          <LazyWrapper>
+            <PostDetail />
           </LazyWrapper>
         ),
       },

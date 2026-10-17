@@ -1,14 +1,14 @@
 {
-  "section": "SELECTED Peices",
-  "title": "Audio Works",
+  "section": "SELECTED PIECES",
+  "title": "PORTFOLIO",
+  "role": "ROLE",
+  "period": "PERIOD",
+  "stack": "STACK",
+  "readCase": "READ CASE STUDY",
+  "viewRepo": "VIEW ON GITHUB",
+  "liveDemo": "LIVE DEMO",
+  "backToList": "Back to Works",
+  "notFound": "Project not found",
   "loading": "Loading...",
-  "noSongs": "No songs found",
-  "epTitles": [
-    "VOID FREQUENCY",
-    "BOTANICAL SYNTH",
-    "INDUSTRIAL ECHO",
-    "SPRING-LIKE",
-    "GROUNDED",
-    "BLOOM"
-  ]
+  "empty": "No projects yet"
 }

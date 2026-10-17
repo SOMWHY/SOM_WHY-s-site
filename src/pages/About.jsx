@@ -2,8 +2,9 @@ import React, { memo, useRef, useEffect, useMemo } from "react"
 import gsap from "gsap"
 import { TextPlugin } from "gsap/TextPlugin"
 import { useTranslation } from "react-i18next"
-import { ImageCard } from "../components"
 import { containsChinese } from "../utils/textUtils"
+// 人像：原本是 Supabase 上的原始 PNG，现改为构建期生成的多分辨率本地 webp
+import artistPortrait from "../assets/screenshots/screenshot-214427.webp?w=480;720;1024&format=webp&quality=85&as=srcset"
 
 gsap.registerPlugin(TextPlugin)
 
@@ -86,12 +87,14 @@ const About = memo(function About() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           <div className="relative aspect-[4/5] overflow-hidden group/img">
             <img
-              src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698810147-8f7bb194/_____2026-01-29_214427.png"
+              srcSet={artistPortrait}
+              sizes="(min-width: 1024px) 45vw, 100vw"
               alt="Artist Portrait"
               width="1024"
               height="1280"
               loading="eager"
-              fetchpriority="high"
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover grayscale opacity-80 group-hover/img:grayscale-0 group-hover/img:opacity-100 transition-vivid no-select"
             />
             <div className="absolute bottom-8 right-8 text-right">

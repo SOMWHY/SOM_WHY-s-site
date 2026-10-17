@@ -4,6 +4,28 @@ import gsap from "gsap"
 
 import usePlayerStore from "../../store/playerStore"
 
+// 封面图：原本是 Supabase 上的原始 PNG（每张几十~上百 KB，却只显示 48x48），
+// 现在统一走构建期生成的 192px 本地 webp。这里按文件名索引，保持 songs.json 里只存文件名。
+const coverImages = import.meta.glob("../../assets/screenshots/*.webp", {
+  query: "?w=192&format=webp&quality=80",
+  import: "default",
+  eager: true,
+})
+
+const coverByFile = Object.fromEntries(
+  Object.entries(coverImages).map(([path, url]) => [
+    path.slice(path.lastIndexOf("/") + 1),
+    url,
+  ]),
+)
+
+/**
+ * cover 字段既可以是本地文件名，也可以是完整 URL。
+ * 保留 URL 兜底是为了尚未提供本地副本的曲目（目前 song-5）。
+ */
+const resolveCover = (cover) =>
+  !cover ? undefined : /^https?:\/\//.test(cover) ? cover : coverByFile[cover]
+
 function Player() {
   const {
     isPlaying,
@@ -360,8 +382,12 @@ function Player() {
           <>
             {currentSong && currentSong.cover && (
               <img
-                src={currentSong.cover}
+                src={resolveCover(currentSong.cover)}
                 alt="cover"
+                width="48"
+                height="48"
+                loading="lazy"
+                decoding="async"
                 style={{
                   width: "48px",
                   height: "48px",

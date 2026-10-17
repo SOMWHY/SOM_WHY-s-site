@@ -1,28 +1,27 @@
-import React, { memo, useState, useCallback, useEffect } from "react"
+import React, { memo, useState, useCallback, useEffect, lazy, Suspense } from "react"
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
-import {
-  Header,
-  Footer,
-  NoiseOverlay,
-  PlayerPortal,
-  MouseTrail,
-  LightOrbs,
-  PageTransition,
-} from "../index"
-import usePlayerStore from "../../store/playerStore"
+import Header from "./Header"
+import Footer from "./Footer"
+import NoiseOverlay from "../animation/NoiseOverlay"
+import MouseTrail from "../animation/MouseTrail"
+import PageTransition from "../animation/PageTransition"
+
+// 播放器和光球特效都依赖较重的第三方库（framer-motion / howler），
+// 改成懒加载后可以把它们从首屏 bundle 里挪出去。
+const PlayerPortal = lazy(() => import("../player/PlayerPortal"))
+const PlayerEffects = lazy(() => import("../player/PlayerEffects"))
 
 // 预加载组件映射
 const preloadComponents = {
   "/": () => import("../../pages/Home"),
   "/works": () => import("../../pages/Works"),
   "/about": () => import("../../pages/About"),
-  "/contact": () => import("../../pages/Contact"),
+  "/blog": () => import("../../pages/Blog"),
   "/links": () => import("../../pages/Links"),
   "/photos": () => import("../../pages/Photos"),
 }
 
 const Layout = memo(function Layout() {
-  const { isPlaying, currentSong } = usePlayerStore()
   const location = useLocation()
   const navigate = useNavigate()
   const [isAnimating, setIsAnimating] = useState(false)
@@ -35,11 +34,16 @@ const Layout = memo(function Layout() {
       "/": "SOM_WHY | 索姆歪的小站",
       "/works": "SOM_WHY | WORKS",
       "/about": "SOM_WHY | ABOUT",
-      "/contact": "SOM_WHY | CONTACT",
+      "/blog": "SOM_WHY | BLOG",
       "/links": "SOM_WHY | CONNECTION",
       "/photos": "SOM_WHY | PHOTOS",
     }
-    document.title = pathToTitle[location.pathname] || "SOM_WHY | 索姆歪的小站"
+    // 详情页路径形如 /blog/<slug>，回退到所属栏目的标题
+    const sectionPath = `/${location.pathname.split("/")[1] ?? ""}`
+    document.title =
+      pathToTitle[location.pathname] ||
+      pathToTitle[sectionPath] ||
+      "SOM_WHY | 索姆歪的小站"
   }, [location.pathname])
 
   // 预加载组件
@@ -96,9 +100,11 @@ const Layout = memo(function Layout() {
         <Outlet />
       </main>
       <Footer onNavigate={handleNavigate} />
-      <PlayerPortal />
+      <Suspense fallback={null}>
+        <PlayerPortal />
+        <PlayerEffects />
+      </Suspense>
       <MouseTrail />
-      {isPlaying && currentSong !== null ? <LightOrbs /> : null}
       <PageTransition
         isActive={isAnimating}
         onAnimationProgress={handleAnimationProgress}

@@ -3,6 +3,8 @@ import gsap from "gsap"
 import { TextPlugin } from "gsap/TextPlugin"
 import { useTranslation } from "react-i18next"
 import { getGlitchTextClassName, containsChinese } from "../utils/textUtils"
+// 首屏主视觉：原本是 Supabase 上的原始 PNG，现改为构建期生成的多分辨率本地 webp
+import heroArtwork from "../assets/screenshots/screenshot-214255.webp?w=480;720;1024&format=webp&quality=85&as=srcset"
 
 gsap.registerPlugin(TextPlugin)
 
@@ -158,12 +160,14 @@ const Home = memo(function Home() {
 
           <div className="aspect-square relative  border border-white/10 shadow-2xl bg-zinc-900">
             <img
-              src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809845-62572e03/_____2026-01-29_214255.png"
+              srcSet={heroArtwork}
+              sizes="(min-width: 768px) 50vw, 100vw"
               alt="Spring Like Artwork"
               width="1024"
               height="1024"
               loading="eager"
-              fetchpriority="high"
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:brightness-110 group-hover:saturate-150 transition-vivid no-select"
             />
           </div>
@@ -191,12 +195,14 @@ const Home = memo(function Home() {
           {/* Reflection */}
           <div className="hidden md:block absolute top-full left-0 w-full h-32 opacity-20 water-reflection pointer-events-none scale-y-[-1] mt-1">
             <img
-              src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/8353c3f7-250e-4525-bb55-dc8b4f3e09e7/1769698809845-62572e03/_____2026-01-29_214255.png"
+              srcSet={heroArtwork}
+              sizes="(min-width: 768px) 50vw, 100vw"
               alt="Reflection"
               width="1024"
               height="1024"
               loading="lazy"
-              fetchpriority="low"
+              fetchPriority="low"
+              decoding="async"
               className="w-full h-full object-cover grayscale"
             />
           </div>

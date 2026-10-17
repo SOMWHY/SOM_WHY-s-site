@@ -5,14 +5,14 @@ import zhHome from "../locales/zh/home.json"
 import zhAbout from "../locales/zh/about.json"
 import zhWorks from "../locales/zh/works.json"
 import zhPhotos from "../locales/zh/photos.json"
-import zhContact from "../locales/zh/contact.json"
+import zhBlog from "../locales/zh/blog.json"
 import zhLinks from "../locales/zh/links.json"
 import enCommon from "../locales/en/common.json"
 import enHome from "../locales/en/home.json"
 import enAbout from "../locales/en/about.json"
 import enWorks from "../locales/en/works.json"
 import enPhotos from "../locales/en/photos.json"
-import enContact from "../locales/en/contact.json"
+import enBlog from "../locales/en/blog.json"
 import enLinks from "../locales/en/links.json"
 
 const getStoredLocale = () => {
@@ -36,7 +36,7 @@ i18n.use(initReactI18next).init({
       about: zhAbout,
       works: zhWorks,
       photos: zhPhotos,
-      contact: zhContact,
+      blog: zhBlog,
       links: zhLinks,
     },
     en: {
@@ -45,14 +45,14 @@ i18n.use(initReactI18next).init({
       about: enAbout,
       works: enWorks,
       photos: enPhotos,
-      contact: enContact,
+      blog: enBlog,
       links: enLinks,
     },
   },
   fallbackLng: "en",
   lng: getStoredLocale(),
   debug: false,
-  ns: ["common", "home", "about", "works", "photos", "contact", "links"],
+  ns: ["common", "home", "about", "works", "photos", "blog", "links"],
   defaultNS: "common",
   interpolation: {
     escapeValue: false,

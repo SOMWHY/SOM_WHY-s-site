@@ -1,14 +1,14 @@
 {
-  "section": "SELECTED Peices",
-  "title": "音乐之声",
+  "section": "SELECTED PIECES",
+  "title": "作品集",
+  "role": "角色",
+  "period": "周期",
+  "stack": "技术栈",
+  "readCase": "查看案例",
+  "viewRepo": "查看仓库",
+  "liveDemo": "在线预览",
+  "backToList": "返回列表",
+  "notFound": "项目不存在",
   "loading": "加载中...",
-  "noSongs": "暂无歌曲",
-  "epTitles": [
-    "VOID FREQUENCY",
-    "BOTANICAL SYNTH",
-    "INDUSTRIAL ECHO",
-    "SPRING-LIKE",
-    "GROUNDED",
-    "BLOOM"
-  ]
+  "empty": "暂无作品"
 }

@@ -1,0 +1,49 @@
+[
+  {
+    "slug": "somwhy-site",
+    "title": "SOM_WHY's Site",
+    "summary": "A bilingual personal site for photography, music and writing — rebuilt around an offline-first asset pipeline so it loads fast on a bad connection.",
+    "role": "Solo developer & designer",
+    "period": "2025.11 — 2026.10",
+    "stack": [
+      "Vite",
+      "React 19",
+      "Tailwind CSS 3",
+      "GSAP",
+      "Framer Motion",
+      "i18next",
+      "Howler",
+      "Zustand"
+    ],
+    "repo": "https://github.com/SOMWHY/SOM_WHY-s-site",
+    "demo": null,
+    "cover": null,
+    "title_zh": "索姆歪的小站",
+    "title_en": null,
+    "summary_zh": "一个承载摄影、音乐与写作的双语个人站点，围绕「离线优先」的资源管线重建，弱网下也能快速打开。",
+    "summary_en": null,
+    "readingMinutes": 3
+  },
+  {
+    "slug": "loopspace-radio",
+    "title": "Loopspace Radio",
+    "summary": "An always-on ambient radio for my own releases — a continuous stream with a schedule, built to stay in sync across tabs and survive a dropped connection.",
+    "role": "Frontend & interaction design",
+    "period": "2026.03 — 2026.08",
+    "stack": [
+      "React",
+      "Web Audio API",
+      "Zustand",
+      "Service Worker",
+      "Vite"
+    ],
+    "repo": null,
+    "demo": "https://somwhy.loopspace.club",
+    "cover": null,
+    "title_zh": "Loopspace 电台",
+    "title_en": null,
+    "summary_zh": "一个常驻的环境音乐电台，按节目单连续播放，跨标签页保持同步，断线后能自行恢复。",
+    "summary_en": null,
+    "readingMinutes": 2
+  }
+]

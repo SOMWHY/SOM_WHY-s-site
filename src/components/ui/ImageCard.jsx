@@ -1,7 +1,19 @@
 import React, { memo, useState } from "react"
 
+/**
+ * 从 srcset 串里取出最后一个候选作为 src 兜底。
+ * srcset 条目形如 "/assets/x-abc.webp 640w"，最后一个通常是最大/最优的那张。
+ */
+function pickFallbackSrc(srcSet) {
+  if (!srcSet) return undefined
+  const last = srcSet.split(",").pop()?.trim()
+  return last ? last.split(/\s+/)[0] : undefined
+}
+
 const ImageCard = memo(function ImageCard({
   image,
+  srcSet,
+  sizes,
   alt,
   children,
   className = "",
@@ -37,12 +49,15 @@ const ImageCard = memo(function ImageCard({
       )}
 
       <img
-        src={image}
+        src={image ?? pickFallbackSrc(srcSet)}
+        srcSet={srcSet}
+        sizes={sizes}
         alt={alt}
         width={width}
         height={height}
         loading={loading}
         fetchPriority={fetchPriority}
+        decoding="async"
         onLoad={() => setIsLoaded(true)}
         className={`w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 no-select group-hover:scale-105 group-hover:rotate-x-2 group-hover:rotate-y-2 ${isLoaded ? "opacity-60" : "opacity-0"}`}
       />

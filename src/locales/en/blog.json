@@ -1,0 +1,10 @@
+{
+  "title": "BLOG",
+  "subtitle": "Notes on frontend, audio and shipping things",
+  "writtenOn": "WRITTEN ON",
+  "minutes": "MINS",
+  "backToList": "Back to Blog",
+  "notFound": "Post not found",
+  "loading": "Loading...",
+  "empty": "No posts yet"
+}
