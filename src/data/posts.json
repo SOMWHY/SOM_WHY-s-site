@@ -7,10 +7,23 @@
     "summary": "My site was fast on localhost and unusable the moment it hit the internet. Four bottlenecks, four fixes, and a 19 MB deploy cut down to under 12 MB.",
     "cover": null,
     "title_zh": "让个人站点「秒开」的那些坑",
-    "title_en": null,
+    "title_en": "Shipping a Personal Site That Feels Instant",
     "summary_zh": "本地飞快、上线即卡。四个瓶颈、四处改动，把 19 MB 的部署产物压到 12 MB 以内。",
-    "summary_en": null,
-    "readingMinutes": 4
+    "summary_en": "My site was fast on localhost and unusable the moment it hit the internet. Four bottlenecks, four fixes, and a 19 MB deploy cut down to under 12 MB.",
+    "readingMinutes": 3
+  },
+  {
+    "slug": "docker-sandbox-pi-coding-agent",
+    "title": "Building an Isolated Environment for Pi Coding Agent with Docker Sandbox",
+    "date": "2026-09-29",
+    "author": "SOMWHY",
+    "summary": "A Windows-focused guide to running Pi Coding Agent in Docker Sandbox with isolated tools, network access, and API credentials.",
+    "cover": null,
+    "title_zh": "如何用 Docker Sandbox 为 Pi Coding Agent 搭建隔离环境",
+    "title_en": "Building an Isolated Environment for Pi Coding Agent with Docker Sandbox",
+    "summary_zh": "用 Docker Sandbox 为 Pi Coding Agent 准备隔离的运行环境，限制主机访问、网络和 API key。本文以 Windows 为例，从目录结构、镜像和配置到启动验证完整走一遍。",
+    "summary_en": "A Windows-focused guide to running Pi Coding Agent in Docker Sandbox with isolated tools, network access, and API credentials.",
+    "readingMinutes": 3
   },
   {
     "slug": "state-in-a-music-player",
@@ -20,9 +33,9 @@
     "summary": "A music player looks like local UI state until you notice the audio has to survive route changes. Notes on keeping playback, progress and the DOM node in the right places.",
     "cover": null,
     "title_zh": "播放器状态该放在哪一层",
-    "title_en": null,
+    "title_en": "Where Should Player State Live?",
     "summary_zh": "音乐播放器看起来是局部 UI 状态，直到你发现音频必须跨路由存活。关于播放、进度与 DOM 节点各该放在哪一层的笔记。",
-    "summary_en": null,
+    "summary_en": "A music player looks like local UI state until you notice the audio has to survive route changes. Notes on keeping playback, progress and the DOM node in the right places.",
     "readingMinutes": 2
   }
 ]

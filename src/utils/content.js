@@ -8,6 +8,7 @@
 
 import postsIndex from "../data/posts.json"
 import projectsIndex from "../data/projects.json"
+import { indexLoaders, loadLocalizedBody } from "./contentLoader"
 
 // 必须是非 eager：eager 会把全部正文打进引入方所在的 chunk，违背按篇懒加载
 const postBodies = import.meta.glob("../content/posts/*.md", {
@@ -25,21 +26,6 @@ export const projects = projectsIndex
 /** frontmatter 块，正文渲染前需要剥掉，否则会被当成 Markdown 内容显示出来 */
 const FRONTMATTER_PATTERN = /^\s*---\r?\n[\s\S]*?\r?\n---\r?\n?/
 
-/** glob 的 key 形如 "../content/posts/01-hello.md"，去掉排序前缀后即 slug */
-function slugFromPath(path) {
-  const fileName = path.slice(path.lastIndexOf("/") + 1).replace(/\.md$/, "")
-  return fileName.replace(/^\d+-/, "")
-}
-
-/** 建立 slug -> 动态加载函数 的映射 */
-function indexLoaders(modules) {
-  const loaders = {}
-  for (const [path, load] of Object.entries(modules)) {
-    loaders[slugFromPath(path)] = load
-  }
-  return loaders
-}
-
 const postLoaders = indexLoaders(postBodies)
 const projectLoaders = indexLoaders(projectBodies)
 
@@ -56,16 +42,14 @@ export function getProject(slug) {
 }
 
 /** 正文按需加载；找不到对应 slug 时返回 null，由调用方决定如何提示 */
-export async function loadPostBody(slug) {
-  const load = postLoaders[slug]
-  if (!load) return null
-  return stripFrontmatter(await load())
+export async function loadPostBody(slug, locale = "zh") {
+  const raw = await loadLocalizedBody(postLoaders, slug, locale)
+  return raw ? stripFrontmatter(await raw) : null
 }
 
-export async function loadProjectBody(slug) {
-  const load = projectLoaders[slug]
-  if (!load) return null
-  return stripFrontmatter(await load())
+export async function loadProjectBody(slug, locale = "zh") {
+  const raw = await loadLocalizedBody(projectLoaders, slug, locale)
+  return raw ? stripFrontmatter(await raw) : null
 }
 
 /**

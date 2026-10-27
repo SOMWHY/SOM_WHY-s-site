@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "test": "node --test tests/content-loader.test.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "fonts:build": "node scripts/subset-fonts.mjs",

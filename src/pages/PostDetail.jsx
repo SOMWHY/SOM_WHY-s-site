@@ -22,7 +22,7 @@ const PostDetail = memo(function PostDetail() {
     let cancelled = false
     setIsLoading(true)
 
-    loadPostBody(slug)
+    loadPostBody(slug, locale)
       .then((content) => {
         if (cancelled) return
         setBody(content ?? "")
@@ -38,7 +38,7 @@ const PostDetail = memo(function PostDetail() {
     return () => {
       cancelled = true
     }
-  }, [slug])
+  }, [slug, locale])
 
   if (!post) {
     return (

@@ -22,7 +22,7 @@ const ProjectDetail = memo(function ProjectDetail() {
     let cancelled = false
     setIsLoading(true)
 
-    loadProjectBody(slug)
+    loadProjectBody(slug, locale)
       .then((content) => {
         if (cancelled) return
         setBody(content ?? "")
@@ -38,7 +38,7 @@ const ProjectDetail = memo(function ProjectDetail() {
     return () => {
       cancelled = true
     }
-  }, [slug])
+  }, [slug, locale])
 
   if (!project) {
     return (

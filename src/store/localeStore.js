@@ -1,11 +1,12 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
+import { DEFAULT_LOCALE, normalizeLocale } from "../i18n/localeStorage"
 
 const useLocaleStore = create(
   persist(
     (set, get) => ({
-      locale: "en",
-      setLocale: (locale) => set({ locale }),
+      locale: DEFAULT_LOCALE,
+      setLocale: (locale) => set({ locale: normalizeLocale(locale) }),
       toggleLocale: () => {
         const { locale } = get()
         set({ locale: locale === "zh" ? "en" : "zh" })
@@ -13,6 +14,11 @@ const useLocaleStore = create(
     }),
     {
       name: "locale-storage",
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...persistedState,
+        locale: normalizeLocale(persistedState?.locale),
+      }),
     },
   ),
 )

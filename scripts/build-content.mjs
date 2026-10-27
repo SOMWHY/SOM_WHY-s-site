@@ -25,6 +25,7 @@ const DATA_DIR = join(ROOT, "src", "data")
 /** 文件名可能带 `01-` 这类排序前缀，前缀只用于排序，不进 slug */
 const ORDER_PREFIX = /^(\d+)-(.+)\.md$/
 const PLAIN_NAME = /^(.+)\.md$/
+const LOCALE_SUFFIX = /\.(zh|en)$/
 
 /** CJK 与日文假名，用于中英混排的阅读时长估算 */
 const CJK_PATTERN = /[㐀-䶿一-鿿぀-ヿ]/g
@@ -41,13 +42,16 @@ function listMarkdown(dir) {
 }
 
 function parseFileName(name, dir) {
-  const ordered = ORDER_PREFIX.exec(name)
+  const localizedName = name.replace(/\.md$/, "")
+  const localeMatch = LOCALE_SUFFIX.exec(localizedName)
+  const baseName = localeMatch ? localizedName.slice(0, localeMatch.index) : localizedName
+  const ordered = ORDER_PREFIX.exec(`${baseName}.md`)
   if (ordered) {
-    return { order: Number(ordered[1]), slug: ordered[2] }
+    return { order: Number(ordered[1]), slug: ordered[2], locale: localeMatch?.[1] ?? null }
   }
-  const plain = PLAIN_NAME.exec(name)
+  const plain = PLAIN_NAME.exec(`${baseName}.md`)
   if (plain) {
-    return { order: Number.MAX_SAFE_INTEGER, slug: plain[1] }
+    return { order: Number.MAX_SAFE_INTEGER, slug: plain[1], locale: localeMatch?.[1] ?? null }
   }
   throw new Error(`无法从文件名派生 slug：${join(dir, name)}`)
 }
@@ -84,38 +88,53 @@ function requireField(data, field, filePath) {
   return value
 }
 
+function groupFiles(dir) {
+  const groups = new Map()
+  for (const name of listMarkdown(dir)) {
+    const parsed = parseFileName(name, dir)
+    const group = groups.get(parsed.slug) ?? { ...parsed, files: {} }
+    group.files[parsed.locale ?? "default"] = name
+    groups.set(parsed.slug, group)
+  }
+  return [...groups.values()]
+}
+
+function readLocalizedFiles(group, dir) {
+  return Object.fromEntries(Object.entries(group.files).map(([locale, name]) => {
+    const filePath = join(dir, name)
+    const parsed = matter(stripLeadingComments(readFileSync(filePath, "utf8")))
+    return [locale, { ...parsed, filePath }]
+  }))
+}
+
+function metadata(localized, field) {
+  return localized.default?.data[field]
+    ?? localized.en?.data[field]
+    ?? localized.zh?.data[field]
+    ?? localized.en?.data[`${field}_en`]
+    ?? localized.zh?.data[`${field}_zh`]
+    ?? null
+}
+
 function buildPosts() {
-  const files = listMarkdown(POSTS_DIR)
-
-  const posts = files.map((name) => {
-    const filePath = join(POSTS_DIR, name)
-    const { order, slug } = parseFileName(name, POSTS_DIR)
-    const { data, content } = matter(stripLeadingComments(readFileSync(filePath, "utf8")))
-
-    const title = requireField(data, "title", filePath)
-    const date = requireField(data, "date", filePath)
-    const author = requireField(data, "author", filePath)
-    const summary = requireField(data, "summary", filePath)
-
+  const posts = groupFiles(POSTS_DIR).map((group) => {
+    const localized = readLocalizedFiles(group, POSTS_DIR)
+    const source = localized.default ?? localized.en ?? localized.zh
+    const { data, content, filePath } = source
+    const title = requireField({ title: metadata(localized, "title") }, "title", filePath)
+    const date = requireField({ date: metadata(localized, "date") }, "date", filePath)
+    const author = requireField({ author: metadata(localized, "author") }, "author", filePath)
+    const summary = requireField({ summary: metadata(localized, "summary") }, "summary", filePath)
     const parsedDate = new Date(date)
-    if (Number.isNaN(parsedDate.getTime())) {
-      throw new Error(`date 字段不是合法日期：${filePath}（当前值：${date}）`)
-    }
-
+    if (Number.isNaN(parsedDate.getTime())) throw new Error(`date 字段不是合法日期：${filePath}（当前值：${date}）`)
     return {
-      slug,
-      order,
-      title,
-      date: parsedDate.toISOString().slice(0, 10),
-      author,
-      summary,
+      slug: group.slug, order: group.order, title, date: parsedDate.toISOString().slice(0, 10), author, summary,
       cover: data.cover ?? null,
-      // 可选本地化覆盖：有则用译名，没有则回退作者原文
-      title_zh: data.title_zh ?? null,
-      title_en: data.title_en ?? null,
-      summary_zh: data.summary_zh ?? null,
-      summary_en: data.summary_en ?? null,
-      readingMinutes: estimateReadingMinutes(content),
+      title_zh: localized.zh?.data.title ?? data.title_zh ?? null,
+      title_en: localized.en?.data.title ?? data.title_en ?? null,
+      summary_zh: localized.zh?.data.summary ?? data.summary_zh ?? null,
+      summary_en: localized.en?.data.summary ?? data.summary_en ?? null,
+      readingMinutes: estimateReadingMinutes((localized.zh ?? source).content),
     }
   })
 
@@ -129,39 +148,24 @@ function buildPosts() {
 }
 
 function buildProjects() {
-  const files = listMarkdown(PROJECTS_DIR)
-
-  const projects = files.map((name) => {
-    const filePath = join(PROJECTS_DIR, name)
-    const { order, slug } = parseFileName(name, PROJECTS_DIR)
-    const { data, content } = matter(stripLeadingComments(readFileSync(filePath, "utf8")))
-
-    const title = requireField(data, "title", filePath)
-    const summary = requireField(data, "summary", filePath)
-    const role = requireField(data, "role", filePath)
-    const period = requireField(data, "period", filePath)
-
+  const projects = groupFiles(PROJECTS_DIR).map((group) => {
+    const localized = readLocalizedFiles(group, PROJECTS_DIR)
+    const source = localized.default ?? localized.en ?? localized.zh
+    const { data, content, filePath } = source
+    const title = requireField({ title: metadata(localized, "title") }, "title", filePath)
+    const summary = requireField({ summary: metadata(localized, "summary") }, "summary", filePath)
+    const role = requireField({ role: metadata(localized, "role") }, "role", filePath)
+    const period = requireField({ period: metadata(localized, "period") }, "period", filePath)
     const stack = data.stack
-    if (!Array.isArray(stack) || stack.length === 0) {
-      throw new Error(`stack 必须是非空数组：${filePath}`)
-    }
-
+    if (!Array.isArray(stack) || stack.length === 0) throw new Error(`stack 必须是非空数组：${filePath}`)
     return {
-      slug,
-      order,
-      title,
-      summary,
-      role,
-      period,
-      stack,
-      repo: data.repo ?? null,
-      demo: data.demo ?? null,
-      cover: data.cover ?? null,
-      title_zh: data.title_zh ?? null,
-      title_en: data.title_en ?? null,
-      summary_zh: data.summary_zh ?? null,
-      summary_en: data.summary_en ?? null,
-      readingMinutes: estimateReadingMinutes(content),
+      slug: group.slug, order: group.order, title, summary, role, period, stack,
+      repo: data.repo ?? null, demo: data.demo ?? null, cover: data.cover ?? null,
+      title_zh: localized.zh?.data.title ?? data.title_zh ?? null,
+      title_en: localized.en?.data.title ?? data.title_en ?? null,
+      summary_zh: localized.zh?.data.summary ?? data.summary_zh ?? null,
+      summary_en: localized.en?.data.summary ?? data.summary_en ?? null,
+      readingMinutes: estimateReadingMinutes((localized.zh ?? source).content),
     }
   })
 

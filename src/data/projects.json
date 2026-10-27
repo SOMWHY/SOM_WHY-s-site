@@ -19,10 +19,10 @@
     "demo": "https://lineform-see-the-music.netlify.app/",
     "cover": null,
     "title_zh": "Lineform 音乐可视化",
-    "title_en": null,
+    "title_en": "Lineform",
     "summary_zh": "沉浸式 3D 音乐可视化站点：在侧边栏选一首歌，画布随音频实时变化。",
-    "summary_en": null,
-    "readingMinutes": 2
+    "summary_en": "An immersive 3D music visualizer: pick a track in the sidebar and the canvas reacts to the audio in real time.",
+    "readingMinutes": 1
   },
   {
     "slug": "rag",
@@ -44,10 +44,31 @@
     "demo": "https://rag-iota-six.vercel.app",
     "cover": null,
     "title_zh": "RAG 知识助手",
-    "title_en": null,
+    "title_en": "RAG",
     "summary_zh": "基于检索增强生成（RAG）的文档问答与知识管理应用：上传 PDF / Markdown，用自然语言提问，AI 基于检索片段流式作答并附来源引用。",
-    "summary_en": null,
-    "readingMinutes": 3
+    "summary_en": "A document Q&A and knowledge management app built on retrieval-augmented generation: upload PDF or Markdown, ask in natural language, and get streamed answers with citations.",
+    "readingMinutes": 2
+  },
+  {
+    "slug": "pi-dsh-pet",
+    "title": "pi-dsh-pet",
+    "summary": "A desktop pet for the pi coding agent: one command installs it, and a transparent animated fish floats on screen reacting to what the agent is doing — thinking, writing code, or idle.",
+    "role": "Fork maintainer & pi integration",
+    "period": "2026.08",
+    "stack": [
+      "JavaScript",
+      "Electron",
+      "Node.js",
+      "WebSocket"
+    ],
+    "repo": "https://github.com/SOMWHY/pi-dsh-pet",
+    "demo": null,
+    "cover": null,
+    "title_zh": "pi-dsh-pet 桌宠",
+    "title_en": "pi-dsh-pet",
+    "summary_zh": "给 pi 编程助手的桌面宠物：一行命令装好，一只透明的动画大肥鱼浮在屏幕上，随 agent 状态（思考 / 写代码 / 空闲）切换动作。",
+    "summary_en": "A desktop pet for the pi coding agent: one command installs it, and a transparent animated fish floats on screen reacting to what the agent is doing — thinking, writing code, or idle.",
+    "readingMinutes": 2
   },
   {
     "slug": "somwhy-site",
@@ -69,10 +90,10 @@
     "demo": null,
     "cover": null,
     "title_zh": "索姆歪的小站",
-    "title_en": null,
+    "title_en": "SOM_WHY's Site",
     "summary_zh": "一个承载摄影、音乐与写作的双语个人站点，围绕「离线优先」的资源管线重建，弱网下也能快速打开。",
-    "summary_en": null,
-    "readingMinutes": 3
+    "summary_en": "A bilingual personal site for photography, music and writing — rebuilt around an offline-first asset pipeline so it loads fast on a bad connection.",
+    "readingMinutes": 2
   },
   {
     "slug": "clipgif",
@@ -90,9 +111,9 @@
     "demo": null,
     "cover": null,
     "title_zh": "clipGIF",
-    "title_en": null,
+    "title_en": "clipGIF",
     "summary_zh": "把视频片段转成 GIF，带可视化时间轴。本地自部署，FastAPI + yt-dlp + ffmpeg，可扩展支持更多平台。",
-    "summary_en": null,
+    "summary_en": "Turn video segments into GIFs with a visual timeline. Self-hosted, FastAPI + yt-dlp + ffmpeg, pluggable for more platforms.",
     "readingMinutes": 2
   },
   {
@@ -109,9 +130,9 @@
     "demo": null,
     "cover": null,
     "title_zh": "react-masonry-layout",
-    "title_en": null,
+    "title_en": "react-masonry-layout",
     "summary_zh": "一个灵活的 React 瀑布流布局组件：内置图片加载与错误处理，布局随容器尺寸自适应。",
-    "summary_en": null,
+    "summary_en": "A flexible masonry layout component for React, with built-in image loading states and layouts that adapt to the container rather than the viewport.",
     "readingMinutes": 1
   }
 ]

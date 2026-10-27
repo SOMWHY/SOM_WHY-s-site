@@ -1,5 +1,6 @@
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
+import { DEFAULT_LOCALE, readStoredLocale } from "./localeStorage"
 import zhCommon from "../locales/zh/common.json"
 import zhHome from "../locales/zh/home.json"
 import zhAbout from "../locales/zh/about.json"
@@ -14,19 +15,6 @@ import enWorks from "../locales/en/works.json"
 import enPhotos from "../locales/en/photos.json"
 import enBlog from "../locales/en/blog.json"
 import enLinks from "../locales/en/links.json"
-
-const getStoredLocale = () => {
-  try {
-    const stored = localStorage.getItem("persist:locale-storage")
-    if (stored) {
-      const parsed = JSON.parse(stored)
-      return parsed.state?.locale || "en"
-    }
-  } catch (error) {
-    console.error("Error reading locale from localStorage:", error)
-  }
-  return "en"
-}
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -49,8 +37,8 @@ i18n.use(initReactI18next).init({
       links: enLinks,
     },
   },
-  fallbackLng: "en",
-  lng: getStoredLocale(),
+  fallbackLng: DEFAULT_LOCALE,
+  lng: readStoredLocale(typeof localStorage === "undefined" ? null : localStorage),
   debug: false,
   ns: ["common", "home", "about", "works", "photos", "blog", "links"],
   defaultNS: "common",
