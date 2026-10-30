@@ -1,16 +1,16 @@
 [
   {
-    "slug": "shipping-a-site-that-feels-instant",
-    "title": "Shipping a Personal Site That Feels Instant",
-    "date": "2026-10-05",
+    "slug": "vibe-coding-practice-guide",
+    "title": "A Practical Guide to Vibe Coding: From Wishful Programming to Spec-Driven Development",
+    "date": "2026-10-30",
     "author": "SOM_WHY",
-    "summary": "My site was fast on localhost and unusable the moment it hit the internet. Four bottlenecks, four fixes, and a 19 MB deploy cut down to under 12 MB.",
+    "summary": "What AI coding tools can actually do, and how the intent–spec–implementation loop turns vague wishes into reliable, spec-driven development.",
     "cover": null,
-    "title_zh": "让个人站点「秒开」的那些坑",
-    "title_en": "Shipping a Personal Site That Feels Instant",
-    "summary_zh": "本地飞快、上线即卡。四个瓶颈、四处改动，把 19 MB 的部署产物压到 12 MB 以内。",
-    "summary_en": "My site was fast on localhost and unusable the moment it hit the internet. Four bottlenecks, four fixes, and a 19 MB deploy cut down to under 12 MB.",
-    "readingMinutes": 3
+    "title_zh": "Vibe Coding 实践指南：从「许愿式编程」到规格驱动开发",
+    "title_en": "A Practical Guide to Vibe Coding: From Wishful Programming to Spec-Driven Development",
+    "summary_zh": "从「许愿式编程」到规格驱动开发：AI 开发工具到底能做什么，以及如何用「意图—规格—实现」的框架补齐个人能力、可靠地完成开发。",
+    "summary_en": "What AI coding tools can actually do, and how the intent–spec–implementation loop turns vague wishes into reliable, spec-driven development.",
+    "readingMinutes": 8
   },
   {
     "slug": "docker-sandbox-pi-coding-agent",
@@ -24,18 +24,5 @@
     "summary_zh": "用 Docker Sandbox 为 Pi Coding Agent 准备隔离的运行环境，限制主机访问、网络和 API key。本文以 Windows 为例，从目录结构、镜像和配置到启动验证完整走一遍。",
     "summary_en": "A Windows-focused guide to running Pi Coding Agent in Docker Sandbox with isolated tools, network access, and API credentials.",
     "readingMinutes": 3
-  },
-  {
-    "slug": "state-in-a-music-player",
-    "title": "Where Should Player State Live?",
-    "date": "2026-09-18",
-    "author": "SOM_WHY",
-    "summary": "A music player looks like local UI state until you notice the audio has to survive route changes. Notes on keeping playback, progress and the DOM node in the right places.",
-    "cover": null,
-    "title_zh": "播放器状态该放在哪一层",
-    "title_en": "Where Should Player State Live?",
-    "summary_zh": "音乐播放器看起来是局部 UI 状态，直到你发现音频必须跨路由存活。关于播放、进度与 DOM 节点各该放在哪一层的笔记。",
-    "summary_en": "A music player looks like local UI state until you notice the audio has to survive route changes. Notes on keeping playback, progress and the DOM node in the right places.",
-    "readingMinutes": 2
   }
 ]
